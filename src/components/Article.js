@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import CommentList from './CommentList'
 import PropTypes from 'prop-types'
 
 class Article extends Component {
@@ -7,12 +8,20 @@ class Article extends Component {
             title: PropTypes.string.isRequired,
             text: PropTypes.string,
             date: PropTypes.string.isRequired
-        }).isRequired
+        }).isRequired,
+        isOpen: PropTypes.bool,
+        onButtonClick: PropTypes.func.isRequired
     }
 
     render() {
         const {article, isOpen, onButtonClick} = this.props
-        const body = isOpen && <section>{article.text}</section>
+        const body = isOpen && <section>
+            {article.text}
+            <CommentList
+                comments = {article.comments}
+                articleOpen = {isOpen}
+            />
+            </section>
         return (
             <div>
                 <h2>
