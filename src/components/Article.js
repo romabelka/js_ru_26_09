@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import CommentList from './CommentList'
 
 class Article extends Component {
     static propTypes = {
@@ -10,9 +11,24 @@ class Article extends Component {
         }).isRequired
     }
 
+    state = {
+        openComments: false
+    }
+
     render() {
         const {article, isOpen, onButtonClick} = this.props
-        const body = isOpen && <section>{article.text}</section>
+        const body = isOpen &&
+            <section>
+                <div>
+                    {article.text}
+                </div>
+                <CommentList
+                    comments = { article.comments }
+                    onCommentsButtonClick = { this.toggleComments() }
+                    isCommentsOpen = { this.state.openComments }
+                />
+            </section>
+
         return (
             <div>
                 <h2>
@@ -26,6 +42,8 @@ class Article extends Component {
             </div>
         )
     }
+
+    toggleComments = () => (ev) => this.setState({ openComments: !this.state.openComments })
 }
 
 
