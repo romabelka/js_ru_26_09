@@ -13,7 +13,8 @@ function App() {
 }
 
 App.propTypes = {
-
+  articles: PropTypes.array
 }
 
 export default App
+

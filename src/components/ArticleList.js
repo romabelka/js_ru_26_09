@@ -3,8 +3,9 @@ import Article from './Article'
 import PropTypes from 'prop-types'
 
 class ArticleList extends Component {
+  
     static defaultProps = {
-        articles: [],
+      articles: [],      
     }
 
     state = {
@@ -12,6 +13,7 @@ class ArticleList extends Component {
     }
 
     render() {
+      
         if (!this.props.articles.length) return <h3>No articles</h3>
 
         const articleElements = this.props.articles.map(article => (
@@ -30,7 +32,7 @@ class ArticleList extends Component {
         )
     }
 
-    toggleOpenArticle = (openArticleId) => (ev) => this.setState({ openArticleId })
+    toggleOpenArticle = (openArticleId) => () => this.setState((openArticleId === this.state.openArticleId) ? { openArticleId: null } : { openArticleId })
 }
 
 ArticleList.propTypes = {
