@@ -11,10 +11,6 @@ class Article extends Component {
         }).isRequired
     }
 
-    state = {
-        openComments: false
-    }
-
     render() {
         const {article, isOpen, onButtonClick} = this.props
         const body = isOpen &&
@@ -24,8 +20,6 @@ class Article extends Component {
                 </div>
                 <CommentList
                     comments = { article.comments }
-                    onCommentsButtonClick = { this.toggleComments() }
-                    isCommentsOpen = { this.state.openComments }
                 />
             </section>
 
@@ -42,8 +36,6 @@ class Article extends Component {
             </div>
         )
     }
-
-    toggleComments = () => (ev) => this.setState({ openComments: !this.state.openComments })
 }
 
 

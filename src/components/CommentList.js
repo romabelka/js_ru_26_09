@@ -4,47 +4,57 @@ import PropTypes from 'prop-types'
 
 class CommentList extends Component {
     static defaultProps = {
-        comments: [],
+        comments: []
+    }
+
+    state = {
         isCommentsOpen: false
     }
 
     render() {
-    const { comments, onCommentsButtonClick, isCommentsOpen } = this.props
-    let commentsElements, body;
-    if (!comments.length) {
-        body = <div>No comments</div>
-    } else {
-        commentsElements = isCommentsOpen && comments.map(comment => (
-            <li key = {comment.id}>
-                <Comment
-                    comment = {comment}
-                />
-            </li>
-        ))
+        const { comments } = this.props
+        const isCommentsOpen = this.state.isCommentsOpen
 
-        body = <div>
-            <button onClick={onCommentsButtonClick}>
-                {isCommentsOpen ? 'close' : 'open'}
-            </button>
-            <ul>
-                {commentsElements}
-            </ul>
-        </div>
+        let commentsElements, body;
+        if (!comments.length) {
+            body = <div>No comments</div>
+        } else {
+            commentsElements = isCommentsOpen && comments.map(comment => (
+                <li key = {comment.id}>
+                    <Comment
+                        comment = {comment}
+                    />
+                </li>
+            ))
+
+            body = <div>
+                <button onClick={this.toggleComments}>
+                    { isCommentsOpen ? 'close' : 'open'}
+                </button>
+                <ul>
+                    {commentsElements}
+                </ul>
+            </div>
+        }
+
+        return (
+            <div>
+                <h3>Комментарии</h3>
+                { body }
+            </div>
+        )
     }
 
-    return (
-        <div>
-            <h3>Комментарии</h3>
-            { body }
-        </div>
-    )
-}
+    /**
+     * Открывает/закрывает комментарии у статьи
+     */
+    toggleComments = () => {
+        this.setState({ isCommentsOpen: !this.state.isCommentsOpen })
+    }
 }
 
 CommentList.propTypes = {
     comments: PropTypes.array,
-    onCommentsButtonClick: PropTypes.func.isRequired,
-    isCommentsOpen: PropTypes.bool
 }
 
 export default CommentList
