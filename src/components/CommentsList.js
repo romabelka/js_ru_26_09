@@ -26,7 +26,7 @@ class CommentsList extends Component {
 		))
 		return (
 			<div>
-				<button onClick={this.toggleComments}> {this.state.commentsAreOpened ? 'close comments' : 'open comments'}</button>
+				<button onClick={this.toggleComments}> {this.state.isOpened ? 'close comments' : 'open comments'}</button>
 				{this.state.isOpened &&
 					<ul>
 						{commentsElements}
