@@ -1,32 +1,30 @@
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import CommentList from './CommentList';
 
 class Article extends Component {
     static propTypes = {
-        article: PropTypes.shape({
-            title: PropTypes.string.isRequired,
-            text: PropTypes.string,
-            date: PropTypes.string.isRequired
-        }).isRequired
-    }
-
+        article: PropTypes.object.isRequired,
+        isOpen: PropTypes.bool.isRequired,
+        onButtonClick: PropTypes.func.isRequired
+    };
     render() {
-        const {article, isOpen, onButtonClick} = this.props
-        const body = isOpen && <section>{article.text}</section>
+        const {article, isOpen, onButtonClick} = this.props;
+        const body = isOpen && <section>
+            {article.text}
+            <CommentList comments={article.comments} />
+        </section>;
         return (
             <div>
                 <h2>
                     {article.title}
-                    <button onClick={onButtonClick}>
-                        {isOpen ? 'close' : 'open'}
-                    </button>
+                    <button onClick={onButtonClick}>{isOpen ? 'close' : 'open'}</button>
                 </h2>
                 {body}
-                <h3>creation date: {(new Date(article.date)).toDateString()}</h3>
+                <h3>Creation date: {new Date(article.date).toDateString()}</h3>
             </div>
         )
     }
 }
 
-
-export default Article
+export default Article;
