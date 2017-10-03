@@ -30,7 +30,9 @@ class ArticleList extends Component {
         )
     }
 
-    toggleOpenArticle = (openArticleId) => (ev) => this.setState({ openArticleId })
+    toggleOpenArticle = (id) => (ev) => this.setState({
+        openArticleId: id === this.state.openArticleId ? null : id
+    })
 }
 
 ArticleList.propTypes = {
