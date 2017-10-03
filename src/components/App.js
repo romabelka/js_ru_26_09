@@ -1,7 +1,6 @@
 import React from 'react'
 import ArticleList from './ArticleList'
 import articles from '../fixtures'
-import PropTypes from 'prop-types'
 
 function App() {
     return (
@@ -10,10 +9,6 @@ function App() {
             <ArticleList articles = {articles} />
         </div>
     )
-}
-
-App.propTypes = {
-
 }
 
 export default App

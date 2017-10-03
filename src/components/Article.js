@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import CommentList from './CommentList'
 
 class Article extends Component {
     static propTypes = {
@@ -12,7 +13,16 @@ class Article extends Component {
 
     render() {
         const {article, isOpen, onButtonClick} = this.props
-        const body = isOpen && <section>{article.text}</section>
+        const body = isOpen &&
+            <section>
+                <div>
+                    {article.text}
+                </div>
+                <CommentList
+                    comments = { article.comments }
+                />
+            </section>
+
         return (
             <div>
                 <h2>
