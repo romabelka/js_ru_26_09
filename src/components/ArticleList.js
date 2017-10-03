@@ -8,18 +8,28 @@ class ArticleList extends Component {
     }
 
     state = {
-        openArticleId: null
+        openArticleId: null,
+        isOpen: false
     }
+
+    toggleOpenArticle = (openArticleId) => () => this.setState(() => {
+        if (openArticleId === this.state.openArticleId) {
+            return { isOpen: !this.state.isOpen }
+        } else {
+            return { openArticleId: openArticleId, isOpen: true }
+        }
+    })
+
 
     render() {
         if (!this.props.articles.length) return <h3>No articles</h3>
 
         const articleElements = this.props.articles.map(article => (
-            <li key = {article.id}>
+            <li key={article.id}>
                 <Article
-                    article = {article}
-                    isOpen = {this.state.openArticleId === article.id}
-                    onButtonClick = {this.toggleOpenArticle(article.id)}
+                    article={article}
+                    isOpen={this.state.openArticleId === article.id && this.state.isOpen}
+                    onButtonClick={this.toggleOpenArticle(article.id)}
                 />
             </li>
         ))
@@ -30,7 +40,6 @@ class ArticleList extends Component {
         )
     }
 
-    toggleOpenArticle = (openArticleId) => (ev) => this.setState({ openArticleId })
 }
 
 ArticleList.propTypes = {
