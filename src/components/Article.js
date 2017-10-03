@@ -11,9 +11,6 @@ class Article extends Component {
         }).isRequired
     }
 
-    state = {
-        commentsAreOpened: false
-    }
     openComments = () => {
         this.setState({ commentsAreOpened: !this.state.commentsAreOpened })
     }
@@ -21,6 +18,7 @@ class Article extends Component {
     render() {
         const { article, isOpen, onButtonClick } = this.props
         const body = isOpen && <section>{article.text}</section>
+        const comments = isOpen && <CommentsList comments={article.comments} />
         return (
             <div>
                 <h2>
@@ -30,12 +28,8 @@ class Article extends Component {
                     </button>
                 </h2>
                 {body}
+                {comments}
                 <h3>creation date: {(new Date(article.date)).toDateString()}</h3>
-                {isOpen &&
-                    <div>
-                        <button onClick={this.openComments}> {this.state.commentsAreOpened ? 'close comments' : 'open comments'}</button>
-                        {this.state.commentsAreOpened && <CommentsList comments={article.comments} />}
-                    </div>}
             </div>
         )
     }

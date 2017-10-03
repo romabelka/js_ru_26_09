@@ -13,11 +13,9 @@ class ArticleList extends Component {
     }
 
     toggleOpenArticle = (openArticleId) => () => this.setState(() => {
-        if (openArticleId === this.state.openArticleId) {
-            return { isOpen: !this.state.isOpen }
-        } else {
-            return { openArticleId: openArticleId, isOpen: true }
-        }
+        return openArticleId === this.state.openArticleId ?
+            { openArticleId: null } :
+            { openArticleId }
     })
 
 
@@ -28,7 +26,7 @@ class ArticleList extends Component {
             <li key={article.id}>
                 <Article
                     article={article}
-                    isOpen={this.state.openArticleId === article.id && this.state.isOpen}
+                    isOpen={this.state.openArticleId === article.id}
                     onButtonClick={this.toggleOpenArticle(article.id)}
                 />
             </li>
