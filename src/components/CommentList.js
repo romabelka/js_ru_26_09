@@ -11,10 +11,23 @@ class CommentList extends Component {
         comments: PropTypes.array.isRequired
     }
 
-    state = {
-        isOpen: false
+    constructor(props) {
+        super(props)
+        this.state = {
+            isOpen: props.defaultOpen
+        }
     }
 
+/*
+    componentDidMount() {
+        console.log('---', 'mounted comments')
+    }
+
+    componentWillUnmount() {
+        console.log('---', 'unmounted comments')
+    }
+
+*/
     render() {
         const {comments} = this.props
         const text = this.state.isOpen ? 'hide comments' : 'show comments'
