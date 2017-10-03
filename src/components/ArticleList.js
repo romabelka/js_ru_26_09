@@ -11,6 +11,18 @@ class ArticleList extends Component {
         openArticleId: null
     }
 
+    componentWillMount() {
+        console.log('---', 'mounting')
+    }
+
+    componentDidMount() {
+        console.log('---', 'mounted')
+    }
+
+    componentWillUpdate(_, nextState) {
+        console.log('---', nextState.openArticleId)
+    }
+
     render() {
         if (!this.props.articles.length) return <h3>No articles</h3>
 
@@ -30,7 +42,19 @@ class ArticleList extends Component {
         )
     }
 
-    toggleOpenArticle = (openArticleId) => (ev) => this.setState({ openArticleId })
+    toggleOpenArticle = (id) => {
+        if (this.memoizedTogglers.get(id)) return this.memoizedTogglers.get(id)
+
+        const func = (ev) => this.setState({
+            openArticleId: id === this.state.openArticleId ? null : id
+        })
+
+        this.memoizedTogglers.set(id, func)
+
+        return func
+    }
+
+    memoizedTogglers = new Map()
 }
 
 ArticleList.propTypes = {
