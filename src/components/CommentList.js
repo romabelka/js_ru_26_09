@@ -1,65 +1,42 @@
 import React, {Component} from 'react'
 import Comment from './Comment'
 import PropTypes from 'prop-types'
+import toggleOpen from '../decorators/toggleOpen'
 
-class CommentList extends Component {
-    static defaultProps = {
-        comments: []
-    }
+function CommentList(props) {
+    const {comments, isOpen, toggleOpen} = props
+    const text = isOpen ? 'hide comments' : 'show comments'
+    return (
+        <div>
+            <button onClick={toggleOpen}>{text}</button>
+            {getBody({ isOpen, comments })}
+        </div>
+    )
+}
 
-    static propTypes = {
-        comments: PropTypes.array.isRequired
-    }
+function getBody({comments, isOpen}) {
+    if (!isOpen) return null
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            isOpen: props.defaultOpen
-        }
-    }
+    const body = comments.length ? (
+        <ul>
+            {comments.map(comment => <li key = {comment.id}><Comment comment = {comment} /></li>)}
+        </ul>
+    ) : <h3>No comments yet</h3>
 
-/*
-    componentDidMount() {
-        console.log('---', 'mounted comments')
-    }
-
-    componentWillUnmount() {
-        console.log('---', 'unmounted comments')
-    }
-
-*/
-    render() {
-        const {comments} = this.props
-        const text = this.state.isOpen ? 'hide comments' : 'show comments'
-        return (
-            <div>
-                <button onClick={this.toggleOpen}>{text}</button>
-                {this.getBody()}
-            </div>
-        )
-    }
-
-    getBody() {
-        if (!this.state.isOpen) return null
-
-        const {comments} = this.props
-        const body = comments.length ? (
-            <ul>
-                {comments.map(comment => <li key = {comment.id}><Comment comment = {comment} /></li>)}
-            </ul>
-        ) : <h3>No comments yet</h3>
-
-        return (
-            <div>
-                {body}
-            </div>
-        )
-    }
-
-    toggleOpen = () => this.setState({
-        isOpen: !this.state.isOpen
-    })
+    return (
+        <div>
+            {body}
+        </div>
+    )
 }
 
 
-export default CommentList
+CommentList.defaultProps = {
+    comments: []
+}
+
+CommentList.propTypes = {
+    comments: PropTypes.array.isRequired
+}
+
+export default toggleOpen(CommentList)
