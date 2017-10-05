@@ -4,7 +4,15 @@ import PropTypes from 'prop-types'
 
 class CommentList extends Component {
     static defaultProps = {
-        comments: []
+        comments: [],
+        defaultOpen: true
+    }
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            isCommentsOpen: props.defaultOpen
+        }
     }
 
     state = {

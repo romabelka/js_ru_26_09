@@ -20,6 +20,7 @@ class Article extends Component {
                 </div>
                 <CommentList
                     comments = { article.comments }
+                    defaultOpen = { false }
                 />
             </section>
 
