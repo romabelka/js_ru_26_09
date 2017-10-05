@@ -1,5 +1,13 @@
+/*
+ * Наследование
+ *
+ * Компонент ArticleList, наследующийся от класса toggleOpenArticleClass расположен в модуле ArticleListInheritance
+ * Класс toggleOpenArticleClass - в модуле decorators/toggleOpenArticle
+ */
+
 import React from 'react'
 import ArticleList from './ArticleList'
+// import ArticleList from './ArticleListInheritance'
 import articles from '../fixtures'
 import PropTypes from 'prop-types'
 
