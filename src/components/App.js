@@ -1,7 +1,9 @@
 import React from 'react'
-import ArticleList from './ArticleList'
 import articles from '../fixtures'
-import PropTypes from 'prop-types'
+/* Для подключения варианта с наследованием раскоментировать строку ниже
+и убрать импорт варианта с декоратором */
+/* import ArticleList from './ArticleListV2' */
+import ArticleList from './ArticleListV2'
 
 function App() {
     return (
@@ -10,10 +12,6 @@ function App() {
             <ArticleList articles = {articles} />
         </div>
     )
-}
-
-App.propTypes = {
-
 }
 
 export default App
