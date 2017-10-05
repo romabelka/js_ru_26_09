@@ -1,64 +1,35 @@
 import React, { Component } from 'react'
 import Article from './Article'
 import PropTypes from 'prop-types'
+import accordeon from '../decorators/accordeon'
 
-class ArticleList extends Component {
-    static defaultProps = {
-        articles: [],
-    }
+function ArticleList (props) {
+    const { openArticleId, articles, toggleOpenArticle } = props
 
-    state = {
-        openArticleId: null
-    }
+    if (!articles.length) return <h3>No articles</h3>
 
-    componentWillMount() {
-        console.log('---', 'mounting')
-    }
-
-    componentDidMount() {
-        console.log('---', 'mounted')
-    }
-
-    componentWillUpdate(_, nextState) {
-        console.log('---', nextState.openArticleId)
-    }
-
-    render() {
-        if (!this.props.articles.length) return <h3>No articles</h3>
-
-        const articleElements = this.props.articles.map(article => (
-            <li key = {article.id}>
-                <Article
-                    article = {article}
-                    isOpen = {this.state.openArticleId === article.id}
-                    onButtonClick = {this.toggleOpenArticle(article.id)}
-                />
-            </li>
-        ))
-        return (
-            <ul>
-                {articleElements}
-            </ul>
-        )
-    }
-
-    toggleOpenArticle = (id) => {
-        if (this.memoizedTogglers.get(id)) return this.memoizedTogglers.get(id)
-
-        const func = (ev) => this.setState({
-            openArticleId: id === this.state.openArticleId ? null : id
-        })
-
-        this.memoizedTogglers.set(id, func)
-
-        return func
-    }
-
-    memoizedTogglers = new Map()
+    const articleElements = articles.map(article => (
+        <li key = {article.id}>
+            <Article
+                article = {article}
+                isOpen = {openArticleId === article.id}
+                onButtonClick = {toggleOpenArticle(article.id)}
+            />
+        </li>
+    ))
+    return (
+        <ul>
+            {articleElements}
+        </ul>
+    )
 }
 
 ArticleList.propTypes = {
     articles: PropTypes.array.isRequired
 }
 
-export default ArticleList
+ArticleList.defaultProps = {
+    articles: [],
+}
+
+export default accordeon(ArticleList)
