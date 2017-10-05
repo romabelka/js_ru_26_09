@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Article from './Article'
-import articlesAccordion from '../decorators/articlesAccordion'
+import ArticlesAccordion from '../helpers/ArticlesAccordion'
 
-class ArticleList extends Component {
+class ArticleListV2 extends ArticlesAccordion {
     static defaultProps = {
         articles: [],
+    }
+
+    state = {
+        openArticleId: null
     }
 
     render() {
@@ -16,8 +20,8 @@ class ArticleList extends Component {
             <li key = {article.id}>
                 <Article
                     article = {article}
-                    isOpen = {this.props.openArticleId === article.id}
-                    onButtonClick = {this.props.toggleOpenArticle(article.id)}
+                    isOpen = {this.state.openArticleId === article.id}
+                    onButtonClick = {this.toggleOpenArticle(article.id)}
                 />
             </li>
         ))
@@ -29,8 +33,8 @@ class ArticleList extends Component {
     }
 }
 
-ArticleList.propTypes = {
+ArticleListV2.propTypes = {
     articles: PropTypes.array.isRequired
 }
 
-export default articlesAccordion(ArticleList)
+export default ArticleListV2
