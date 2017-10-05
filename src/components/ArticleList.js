@@ -1,26 +1,56 @@
-import React, { Component } from 'react'
+// ВАРИАНТ № 1 - декорирование //
+
+/*import React, { Component } from 'react'
+import accordion from '../decorators/accordion'
 import Article from './Article'
 import PropTypes from 'prop-types'
 
-class ArticleList extends Component {
+
+function ArticleList (props) {
+    return (
+        getContent(props)
+    );
+}
+
+function getContent(props) {
+    const {articles, openItemId, toggleOpenItem} = props;
+
+    if (!articles) return <h3>No articles</h3>;
+
+    const articleElements = articles.map(article => (
+        <li key = {article.id}>
+            <Article
+                article = {article}
+                isOpen = {openItemId === article.id}
+                onButtonClick = {toggleOpenItem(article.id)}
+            />
+        </li>
+    ));
+
+    return <ul>{articleElements}</ul>;
+}
+
+ArticleList.defaultProps = {
+    articles: []
+};
+
+ArticleList.propTypes = {
+    articles: PropTypes.array.isRequired
+};
+
+export default accordion(ArticleList);*/
+
+
+
+// ВАРИАНТ №2 - наследование //
+import React from 'react'
+import AccordionComponent from './AccordionComponent'
+import Article from './Article'
+import PropTypes from 'prop-types'
+
+class ArticleList extends AccordionComponent {
     static defaultProps = {
         articles: [],
-    }
-
-    state = {
-        openArticleId: null
-    }
-
-    componentWillMount() {
-        console.log('---', 'mounting')
-    }
-
-    componentDidMount() {
-        console.log('---', 'mounted')
-    }
-
-    componentWillUpdate(_, nextState) {
-        console.log('---', nextState.openArticleId)
     }
 
     render() {
@@ -30,8 +60,8 @@ class ArticleList extends Component {
             <li key = {article.id}>
                 <Article
                     article = {article}
-                    isOpen = {this.state.openArticleId === article.id}
-                    onButtonClick = {this.toggleOpenArticle(article.id)}
+                    isOpen = {this.state.openItemId === article.id}
+                    onButtonClick = {this.toggleOpenItem(article.id)}
                 />
             </li>
         ))
@@ -41,20 +71,6 @@ class ArticleList extends Component {
             </ul>
         )
     }
-
-    toggleOpenArticle = (id) => {
-        if (this.memoizedTogglers.get(id)) return this.memoizedTogglers.get(id)
-
-        const func = (ev) => this.setState({
-            openArticleId: id === this.state.openArticleId ? null : id
-        })
-
-        this.memoizedTogglers.set(id, func)
-
-        return func
-    }
-
-    memoizedTogglers = new Map()
 }
 
 ArticleList.propTypes = {
