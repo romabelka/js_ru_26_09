@@ -17,14 +17,7 @@ class Article extends PureComponent {
         clicked: 0
     }
 
-/*
-    shouldComponentUpdate(nextProps) {
-        return this.props.isOpen !== nextProps.isOpen
-    }
-*/
-
     render() {
-        console.log('---', 'rendering article')
         const {article, isOpen, onButtonClick} = this.props
         const body = isOpen && (
                 <div>
