@@ -5,16 +5,23 @@ export default (OriginalComponent) => class DecoratedComponent extends React.Com
     constructor(props) {
         super(props)
         this.state = {
-            isOpen: props.defaultOpen
+            openedId: null
         }
     }
+    toggleOpen = (id) => {
+        if (this.memoizedTogglers.get(id)) return this.memoizedTogglers.get(id)
+
+        const func = (ev) => this.setState({
+            openedId: id === this.state.openedId ? null : id
+        })
+
+        this.memoizedTogglers.set(id, func)
+
+        return func
+    }
+    memoizedTogglers = new Map()
 
     render() {
-        return <OriginalComponent {...this.props} {...this.state} toggleOpen = {this.toggleOpen}/>
+        return <OriginalComponent {...this.props} {...this.state} toggleOpen={this.toggleOpen}  />
     }
-
-    toggleOpen = () => this.setState({
-        isOpen: !this.state.isOpen
-    })
-
 }

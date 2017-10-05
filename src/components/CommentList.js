@@ -4,11 +4,12 @@ import PropTypes from 'prop-types'
 import toggleOpen from '../decorators/toggleOpen'
 
 function CommentList(props) {
-    const {comments, isOpen, toggleOpen} = props
+    const {comments, openedId, toggleOpen, id} = props;
+    const isOpen = (openedId === id)
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
         <div>
-            <button onClick={toggleOpen}>{text}</button>
+            <button onClick={toggleOpen(id)}>{text}</button>
             {getBody({ isOpen, comments })}
         </div>
     )
