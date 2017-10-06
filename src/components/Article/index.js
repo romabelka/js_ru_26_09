@@ -1,6 +1,9 @@
 import React, {Component, PureComponent} from 'react'
 import PropTypes from 'prop-types'
-import CommentList from './CommentList'
+import CommentList from '../CommentList'
+import {findDOMNode} from 'react-dom'
+import CSSTransition from 'react-addons-css-transition-group'
+import './style.css'
 
 class Article extends PureComponent {
     static propTypes = {
@@ -17,21 +20,16 @@ class Article extends PureComponent {
         clicked: 0
     }
 
-/*
-    shouldComponentUpdate(nextProps) {
-        return this.props.isOpen !== nextProps.isOpen
-    }
-*/
+    /*
+     shouldComponentUpdate(nextProps) {
+     return this.props.isOpen !== nextProps.isOpen
+     }
+     */
 
     render() {
-        console.log('---', 'rendering article')
         const {article, isOpen, onButtonClick} = this.props
-        const body = isOpen && (
-                <div>
-                    <section>{article.text}</section>
-                    <CommentList comments = {article.comments} defaultOpen />
-                </div>
-            )
+        if (this.state.clicked > 3) throw new Error('clicked more then 3 times')
+
         return (
             <div>
                 <h2 ref = {this.setHeaderRef}>
@@ -42,15 +40,39 @@ class Article extends PureComponent {
                     <a href="#" onClick = {this.increment}>clicked {this.state.clicked} times</a>
                 </h2>
                 <h3 onClick = {this.updateTime}>Time now: {(new Date).toString()}</h3>
-                {body}
+                <CSSTransition
+                    transitionName = 'article'
+                    transitionEnterTimeout = {500}
+                    transitionLeaveTimeout = {300}
+                    transitionAppearTimeout = {300}
+                    transitionAppear
+                    component = 'div'
+                >
+                    {this.getBody()}
+                </CSSTransition>
                 <h3>creation date: {(new Date(article.date)).toDateString()}</h3>
             </div>
         )
     }
 
+    getBody() {
+        const {isOpen, article} = this.props
+        return isOpen && (
+                <div>
+                    <section>{article.text}</section>
+                    <CommentList comments = {article.comments} ref = {this.setCommentsRef} key = {this.state.clicked}/>
+                </div>
+            )
+    }
+
     setHeaderRef = header => {
         this.header = header
-        console.log('---', header)
+//        console.log('---', header)
+    }
+
+    setCommentsRef = comments => {
+//        setTimeout(() => comments.forceUpdate(), 1000)
+//        console.log('---', findDOMNode(comments))
     }
 
     increment = ev => {
