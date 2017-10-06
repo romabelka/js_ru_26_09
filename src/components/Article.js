@@ -1,6 +1,7 @@
 import React, {Component, PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import CommentList from './CommentList'
+import {findDOMNode} from 'react-dom'
 
 class Article extends PureComponent {
     static propTypes = {
@@ -29,7 +30,7 @@ class Article extends PureComponent {
         const body = isOpen && (
                 <div>
                     <section>{article.text}</section>
-                    <CommentList comments = {article.comments} defaultOpen />
+                    <CommentList comments = {article.comments} ref = {this.setCommentsRef}/>
                 </div>
             )
         return (
@@ -51,6 +52,11 @@ class Article extends PureComponent {
     setHeaderRef = header => {
         this.header = header
         console.log('---', header)
+    }
+
+    setCommentsRef = comments => {
+        setTimeout(() => comments.forceUpdate(), 1000)
+        console.log('---', findDOMNode(comments))
     }
 
     increment = ev => {
