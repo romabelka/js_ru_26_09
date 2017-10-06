@@ -7,7 +7,7 @@ class ArticleList extends Accordion {
     constructor(props) {
         super(props)
         this.state = {
-            ...this.state,
+            openItemId: props.articles[0].id,
             error: null
         }
     }
