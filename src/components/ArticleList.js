@@ -4,8 +4,18 @@ import Article from './Article'
 import Accordion from './common/Accordion'
 
 class ArticleList extends Accordion {
+    constructor(props) {
+        super(props)
+        this.state = {
+            ...this.state,
+            error: null
+        }
+    }
+
     render() {
         const {articles} = this.props
+        if (this.state.error) return <h2>{this.state.error}</h2>
+
         if (!articles.length) return <h3>No Articles</h3>
         const articleElements = articles.map((article) => <li key={article.id}>
             <Article article={article}
@@ -18,6 +28,13 @@ class ArticleList extends Accordion {
                 {articleElements}
             </ul>
         )
+    }
+
+    componentDidCatch(error) {
+        console.log('---', error)
+        this.setState({
+            error: error.message
+        })
     }
 }
 

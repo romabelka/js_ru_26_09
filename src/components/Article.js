@@ -25,12 +25,13 @@ class Article extends PureComponent {
 */
 
     render() {
-        console.log('---', 'rendering article')
         const {article, isOpen, onButtonClick} = this.props
+        if (this.state.clicked > 3) throw new Error('clicked more then 3 times')
+
         const body = isOpen && (
                 <div>
                     <section>{article.text}</section>
-                    <CommentList comments = {article.comments} ref = {this.setCommentsRef}/>
+                    <CommentList comments = {article.comments} ref = {this.setCommentsRef} key = {this.state.clicked}/>
                 </div>
             )
         return (
@@ -51,12 +52,12 @@ class Article extends PureComponent {
 
     setHeaderRef = header => {
         this.header = header
-        console.log('---', header)
+//        console.log('---', header)
     }
 
     setCommentsRef = comments => {
-        setTimeout(() => comments.forceUpdate(), 1000)
-        console.log('---', findDOMNode(comments))
+//        setTimeout(() => comments.forceUpdate(), 1000)
+//        console.log('---', findDOMNode(comments))
     }
 
     increment = ev => {
