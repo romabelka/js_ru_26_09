@@ -4,7 +4,9 @@ import ArticleList from './ArticleList'
 import ArticlesChart from './ArticlesChart'
 import UserForm from './UserForm'
 import articles from '../fixtures'
-import 'react-select/dist/react-select.css'
+import MyDayPicker from './MyDayPicker'
+
+
 
 class App extends Component {
     state = {
@@ -19,6 +21,7 @@ class App extends Component {
         return (
             <div>
                 <h1>App name</h1>
+                <MyDayPicker/>
                 <UserForm />
                 <Select options = {options} value = {this.state.selected} onChange = {this.handleChange} multi/>
                 <ArticleList articles = {articles}/>
