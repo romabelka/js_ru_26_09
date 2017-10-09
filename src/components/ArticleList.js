@@ -1,28 +1,28 @@
-import React, { Component } from 'react'
-import Article from './Article'
+import React from 'react'
 import PropTypes from 'prop-types'
+import Article from './Article'
+import Accordion from './common/Accordion'
 
-class ArticleList extends Component {
-    static defaultProps = {
-        articles: [],
-    }
-
-    state = {
-        openArticleId: null
+class ArticleList extends Accordion {
+    constructor(props) {
+        super(props)
+        this.state = {
+            openItemId: props.articles[0].id,
+            error: null
+        }
     }
 
     render() {
-        if (!this.props.articles.length) return <h3>No articles</h3>
+        const {articles} = this.props
+        if (this.state.error) return <h2>{this.state.error}</h2>
 
-        const articleElements = this.props.articles.map(article => (
-            <li key = {article.id}>
-                <Article
-                    article = {article}
-                    isOpen = {this.state.openArticleId === article.id}
-                    onButtonClick = {this.toggleOpenArticle(article.id)}
-                />
-            </li>
-        ))
+        if (!articles.length) return <h3>No Articles</h3>
+        const articleElements = articles.map((article) => <li key={article.id}>
+            <Article article={article}
+                     isOpen={article.id === this.state.openItemId}
+                     onButtonClick={this.toggleOpenItemMemoized(article.id)}
+            />
+        </li>)
         return (
             <ul>
                 {articleElements}
@@ -30,7 +30,17 @@ class ArticleList extends Component {
         )
     }
 
-    toggleOpenArticle = (openArticleId) => (ev) => this.setState({ openArticleId })
+    componentDidCatch(error) {
+        console.log('---', error)
+        this.setState({
+            error: error.message
+        })
+    }
+}
+
+
+ArticleList.defaultProps = {
+    articles: []
 }
 
 ArticleList.propTypes = {
