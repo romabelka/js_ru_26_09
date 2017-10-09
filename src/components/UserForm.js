@@ -5,17 +5,18 @@ class UserForm extends Component {
     static propTypes = {
 
     };
+
     state = {
         username: ''
-    }
+    };
+
 
     render() {
         return (
             <div>
                 username: <input type='text'
                                  value = {this.state.username}
-                                 onChange = {this.handleChange}
-                            />
+                                 onChange = {this.handleChange} />
             </div>
         )
     }
