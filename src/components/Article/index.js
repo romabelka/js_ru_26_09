@@ -1,8 +1,9 @@
 import React, {Component, PureComponent} from 'react'
-import PropTypes from 'prop-types'
-import CommentList from '../CommentList'
 import {findDOMNode} from 'react-dom'
+import PropTypes from 'prop-types'
 import CSSTransition from 'react-addons-css-transition-group'
+import CommentList from '../CommentList'
+import AddCommentForm from '../AddCommentForm'
 import './style.css'
 
 class Article extends PureComponent {
@@ -61,6 +62,7 @@ class Article extends PureComponent {
                 <div>
                     <section>{article.text}</section>
                     <CommentList comments = {article.comments} ref = {this.setCommentsRef} key = {this.state.clicked}/>
+                    <AddCommentForm />
                 </div>
             )
     }
