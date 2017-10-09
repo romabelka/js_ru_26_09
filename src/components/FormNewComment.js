@@ -5,7 +5,9 @@ class FormNewComment extends React.Component {
         super(props);
         this.state = {
             userName: '',
-            textComment: ''
+            textComment: '',
+            inputStyle: {},
+            textAreaStyle: {}
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -14,12 +16,39 @@ class FormNewComment extends React.Component {
     }
 
     handleInputChange(event) {
+        if (event.target.value.length < 10)  {
+            this.setState({
+                inputStyle: {borderColor: 'red'}
+            })
+        }
+
+        if (event.target.value.length >= 10)  {
+            this.setState({
+                inputStyle: {}
+            })
+        }
+
         this.setState({
             userName: event.target.value
         })
     }
 
     handleChangeTextArea(event) {
+        if (event.target.value.length < 10)  {
+            this.setState({
+                textAreaStyle: {
+                    borderColor: 'red',
+                    borderWidth: '2px'
+                }
+            })
+        }
+
+        if (event.target.value.length >= 10)  {
+            this.setState({
+                textAreaStyle: {}
+            })
+        }
+
         this.setState({
             textComment: event.target.value
         })
@@ -27,18 +56,26 @@ class FormNewComment extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.setState({
-            userName: '',
-            textComment: ''
-        })
+
+        if (this.state.userName.length < 10 || this.state.textComment.length < 10) {
+            alert('form is not valid');
+        } else {
+            this.setState({
+                userName: '',
+                textComment: ''
+            })
+        }
+
     }
 
     render() {
         return (
             <form>
                 <label>
-                    User Name:
+                    <div>User Name:</div>
                     <input
+                        maxLength="50"
+                        style={this.state.inputStyle}
                         name="userName"
                         type="text"
                         value={this.state.userName}
@@ -46,8 +83,10 @@ class FormNewComment extends React.Component {
                 </label>
                 <br />
                 <label>
-                    Сomment text:
+                    <div>Сomment text:</div>
                     <textarea
+                        style={this.state.textAreaStyle}
+                        maxLength="50"
                         onChange={this.handleChangeTextArea}
                         value={this.state.textComment}
                     />
