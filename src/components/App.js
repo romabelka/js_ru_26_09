@@ -28,7 +28,6 @@ class App extends Component {
                         onDayClick={this.handleDayClick}
                         fixedWeeks
             />
-            <h4>Selected range:</h4>
             <h4>Начальная дата {fromDay ? fromDay.toLocaleString() : 'не задана'} </h4>
             <h4>Конечная дата {toDay ? toDay.toLocaleString() : 'не задана'} </h4>
         </div>
