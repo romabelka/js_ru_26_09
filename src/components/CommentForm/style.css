@@ -1,0 +1,23 @@
+.input[type="text"] {
+    margin: 10px;
+    height: 20px;
+    width: 200px;
+    outline: none;
+}
+.input[type="submit"] {
+    margin: 10px;
+    cursor: pointer;
+}
+.input--error[type="text"] {
+    border: 1px solid red;
+    box-shadow: 0 0 20px 5px rgba(255,0,0,0.4);
+}
+.label {
+    display: flex;
+    justify-content: space-between;
+    max-width: 350px;
+    align-items: center;
+}
+.label-submit {
+    justify-content: flex-end;
+}
