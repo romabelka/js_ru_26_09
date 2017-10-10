@@ -3,6 +3,7 @@ import ArticleList from './ArticleList'
 import ArticlesChart from './ArticlesChart'
 import Filters from './Filters'
 import UserForm from './UserForm'
+import RangePicker from './RangePicker'
 import articles from '../fixtures'
 
 class App extends Component {
@@ -18,6 +19,7 @@ class App extends Component {
         return (
             <div>
                 <h1>App name</h1>
+                <RangePicker />
                 <UserForm />
                 <Filters articles = {articles}/>
                 <ArticleList articles = {articles}/>

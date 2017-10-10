@@ -26,6 +26,7 @@ function getBody({comments, isOpen}) {
 
     return (
         <div>
+            <CommentForm />
             {body}
             <CommentForm />
         </div>

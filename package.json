@@ -29,12 +29,14 @@
   },
   "dependencies": {
     "css-loader": "^0.28.7",
+    "moment": "^2.18.1",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-addons-css-transition-group": "^15.6.2",
     "react-day-picker": "^6.2.1",
     "react-dom": "^16.0.0",
     "react-select": "1.0.0-rc.10",
+    "react-text-input": "0.0.8",
     "style-loader": "^0.19.0"
   }
 }
