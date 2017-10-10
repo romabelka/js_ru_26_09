@@ -3,8 +3,10 @@ import Select from 'react-select'
 import ArticleList from './ArticleList'
 import ArticlesChart from './ArticlesChart'
 import UserForm from './UserForm'
+import RangeDayPicker from './RangeDayPicker'
 import articles from '../fixtures'
 import 'react-select/dist/react-select.css'
+
 
 class App extends Component {
     state = {
@@ -21,6 +23,7 @@ class App extends Component {
                 <h1>App name</h1>
                 <UserForm />
                 <Select options = {options} value = {this.state.selected} onChange = {this.handleChange} multi/>
+                <RangeDayPicker />
                 <ArticleList articles = {articles}/>
                 <ArticlesChart articles = {articles}/>
             </div>
