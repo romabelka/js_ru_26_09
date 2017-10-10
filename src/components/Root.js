@@ -9,10 +9,10 @@ class Root extends Component {
     };
 
     render() {
-        const {articles, store} = this.props
+        const {store} = this.props
         return (
             <Provider store = {store}>
-                <App articles = {articles} />
+                <App />
             </Provider>
         )
     }

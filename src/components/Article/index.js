@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import CommentList from '../CommentList'
 import {findDOMNode} from 'react-dom'
 import CSSTransition from 'react-addons-css-transition-group'
+import {connect} from 'react-redux'
+import {deleteArticle} from '../../AC'
 import './style.css'
 
 class Article extends PureComponent {
@@ -38,6 +40,7 @@ class Article extends PureComponent {
                         {isOpen ? 'close' : 'open'}
                     </button>
                     <a href="#" onClick = {this.increment}>clicked {this.state.clicked} times</a>
+                    <button onClick = {this.handleDelete}>delete me</button>
                 </h2>
                 <h3 onClick = {this.updateTime}>Time now: {(new Date).toString()}</h3>
                 <CSSTransition
@@ -65,6 +68,13 @@ class Article extends PureComponent {
             )
     }
 
+    handleDelete = () => {
+        //this.props.dispatch(deleteArticle(this.props.article.id))
+//        this.props.deleteArticle(this.props.article.id)
+        const {deleteArticle, article} = this.props
+        deleteArticle(article.id)
+    }
+
     setHeaderRef = header => {
         this.header = header
 //        console.log('---', header)
@@ -86,4 +96,4 @@ class Article extends PureComponent {
 }
 
 
-export default Article
+export default connect(null, { deleteArticle })(Article)
