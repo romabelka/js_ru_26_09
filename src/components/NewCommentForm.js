@@ -1,37 +1,30 @@
 import React, { Component } from 'react';
-import { Editor, EditorState } from 'draft-js';
 import './NewCommentForm.css'
 
 
 class NewCommentForm extends Component {
 	state = {
 		user: '',
-		comment: null,
-		text: '',
-		editorState: EditorState.createEmpty()
+		comment: ''
 	}
 
-	onChange = (editorState) => this.setState({ editorState });
+	handleSubmit = (e) => {
+		e.preventDefault();
+		if (this.state.user.length < 10) {
+			return
+		} else {
+			this.setState({ user: '', comment: '' })
+		}
+	}
 	userHandleChange = e => this.setState({ user: e.target.value })
 	commentHandleChange = e => {
-		this.setState({ text: e.target.value })
-		let text = <span style={{ color: 'blue' }}> AND </span>
-		const newValue = <div> {this.state.text.replace(/and/g, text)} </div>;
-		this.setState({ comment: newValue })
+		if (this.state.comment.length < 50) {
+			this.setState({ comment: e.target.value });
+		}
 	}
-
-
-	textHandleChange = (e) => {
-		console.log(e.target.value);
-		let text = <span style={{ color: 'blue' }}> AND </span>
-		const newValue = <div> {this.state.text.replace(/and/g, text)} </div>;
-		this.setState({ comment: newValue })
-	}
-
-
 	render() {
 		return (
-			<form onSubmit={this.handleSubmit}>
+			<form>
 				<label htmlFor={'userName'}>User Name:</label>
 				<br />
 				<input
@@ -45,14 +38,13 @@ class NewCommentForm extends Component {
 				<label htmlFor={'comment'}>Comment:</label>
 				<br />
 				<textarea
-					value={this.state.text}
+					value={this.state.comment}
 					className={''}
 					onChange={this.commentHandleChange}
 					id={'comment'}
-				></textarea>
-				<div>{this.state.comment}</div>
-				<Editor editorState={this.state.editorState} onChange={this.onChange} />
-
+				/>
+				<br />
+				<button type='submit'onClick ={this.handleSubmit}>Submit</button>
 			</form>
 		)
 	}
