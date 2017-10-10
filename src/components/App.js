@@ -3,30 +3,22 @@ import ArticleList from './ArticleList'
 import ArticlesChart from './ArticlesChart'
 import Filters from './Filters'
 import UserForm from './UserForm'
-import articles from '../fixtures'
+import Counter from './Counter'
 
 class App extends Component {
-    state = {
-        selected: null
-    }
-
     render() {
-        const options = articles.map(article => ({
-            label: article.title,
-            value: article.id
-        }))
+        const {articles} = this.props
         return (
             <div>
                 <h1>App name</h1>
                 <UserForm />
+                <Counter />
                 <Filters articles = {articles}/>
                 <ArticleList articles = {articles}/>
                 <ArticlesChart articles = {articles}/>
             </div>
         )
     }
-
-    handleChange = selected => this.setState({ selected })
 }
 
 App.propTypes = {
