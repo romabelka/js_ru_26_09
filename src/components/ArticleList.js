@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Article from './Article'
 import Accordion from './common/Accordion'
+import {connect} from 'react-redux'
 
 class ArticleList extends Accordion {
     constructor(props) {
@@ -18,9 +19,9 @@ class ArticleList extends Accordion {
 
         if (!articles.length) return <h3>No Articles</h3>
         const articleElements = articles.map((article) => <li key={article.id}>
-            <Article article={article}
-                     isOpen={article.id === this.state.openItemId}
-                     onButtonClick={this.toggleOpenItemMemoized(article.id)}
+            <Article article = {article}
+                     isOpen = {article.id === this.state.openItemId}
+                     onButtonClick = {this.toggleOpenItemMemoized(article.id)}
             />
         </li>)
         return (
@@ -47,4 +48,6 @@ ArticleList.propTypes = {
     articles: PropTypes.array.isRequired
 }
 
-export default ArticleList
+export default connect((state) => ({
+    articles: state.articles
+}))(ArticleList)
