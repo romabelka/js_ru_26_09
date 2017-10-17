@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Select from 'react-select'
+import {connect} from 'react-redux'
 
 import 'react-select/dist/react-select.css'
 
@@ -31,4 +32,6 @@ class SelectFilter extends Component {
     }
 }
 
-export default SelectFilter
+export default connect((state) => ({
+    articles: state.articles
+}))(SelectFilter)
