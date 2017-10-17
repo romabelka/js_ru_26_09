@@ -14,16 +14,22 @@ class ArticleList extends Accordion {
     }
 
     render() {
-        const {articles} = this.props
+        const {articles, filter} = this.props
         if (this.state.error) return <h2>{this.state.error}</h2>
 
         if (!articles.length) return <h3>No Articles</h3>
-        const articleElements = articles.map((article) => <li key={article.id}>
-            <Article article = {article}
-                     isOpen = {article.id === this.state.openItemId}
-                     onButtonClick = {this.toggleOpenItemMemoized(article.id)}
-            />
-        </li>)
+        const articleElements = articles
+            .filter(article =>
+                // (payload.username ? payload.username === article.username : true) &&
+                (filter.from ? filter.from <= Date.parse(article.date) : true) &&
+                (filter.to ? filter.to >= Date.parse(article.date) : true) &&
+                (filter.ids && filter.ids.length > 0 ? filter.ids.includes(article.id) : true))
+            .map((article) => <li key={article.id}>
+                <Article article = {article}
+                         isOpen = {article.id === this.state.openItemId}
+                         onButtonClick = {this.toggleOpenItemMemoized(article.id)}
+                />
+            </li>)
         return (
             <ul>
                 {articleElements}
@@ -49,5 +55,6 @@ ArticleList.propTypes = {
 }
 
 export default connect((state) => ({
-    articles: state.articles
+    articles: state.articles,
+    filter: state.filter
 }))(ArticleList)
