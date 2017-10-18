@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Article from './Article'
 import Accordion from './common/Accordion'
 import {connect} from 'react-redux'
+import {filterByDate} from '../utils'
 
 class ArticleList extends Accordion {
     constructor(props) {
@@ -14,11 +15,18 @@ class ArticleList extends Accordion {
     }
 
     render() {
-        const {articles} = this.props
+        const {selected, articles, range} = this.props;
+        const selectedIds = selected.map(v => v.value);
+        const filterBySelect = article => selectedIds.indexOf(article.id) !== -1;
+        const selectedArticles = selected.length ? articles.filter(filterBySelect) : articles;
+
+        const rangedArticles = filterByDate(selectedArticles, range);
+
+
         if (this.state.error) return <h2>{this.state.error}</h2>
 
-        if (!articles.length) return <h3>No Articles</h3>
-        const articleElements = articles.map((article) => <li key={article.id}>
+        if (!rangedArticles.length) return <h3>No Articles</h3>
+        const articleElements = rangedArticles.map((article) => <li key={article.id}>
             <Article article = {article}
                      isOpen = {article.id === this.state.openItemId}
                      onButtonClick = {this.toggleOpenItemMemoized(article.id)}
@@ -41,7 +49,9 @@ class ArticleList extends Accordion {
 
 
 ArticleList.defaultProps = {
-    articles: []
+    articles: [],
+    selected: [],
+    range: {from: null, to: null}
 }
 
 ArticleList.propTypes = {
@@ -49,5 +59,7 @@ ArticleList.propTypes = {
 }
 
 export default connect((state) => ({
-    articles: state.articles
+    articles: state.articles,
+    selected: state.selectedArticles,
+    range: state.range
 }))(ArticleList)
