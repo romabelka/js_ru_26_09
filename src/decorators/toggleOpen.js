@@ -9,7 +9,7 @@ export default (OriginalComponent) => class DecoratedComponent extends React.Com
         }
     }
 
-    componentDidMount() {
+    /*componentDidMount() {
         console.log('---', 'decorated component mounted')
     }
 
@@ -19,7 +19,7 @@ export default (OriginalComponent) => class DecoratedComponent extends React.Com
 
     componentWillUnmount() {
         console.log('---', 'decorated component unmounted')
-    }
+    }*/
 
     render() {
         return <OriginalComponent {...this.props} {...this.state} toggleOpen = {this.toggleOpen}/>

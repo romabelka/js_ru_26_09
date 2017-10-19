@@ -8,7 +8,7 @@ class ArticleList extends Accordion {
     constructor(props) {
         super(props)
         this.state = {
-            openItemId: props.articles[0].id,
+            openItemId: (props.articles && props.articles.length>1) ? props.articles[0].id : null,
             error: null
         }
     }
@@ -48,6 +48,21 @@ ArticleList.propTypes = {
     articles: PropTypes.array.isRequired
 }
 
+
 export default connect((state) => ({
-    articles: state.articles
+    articles: state.articles.filter(article => {
+        if (state.selectFilter.length==0) return true;
+        for (let i = 0; i<state.selectFilter.length; i++)
+        {
+           if (article.id === state.selectFilter[i].value) return true;
+        }
+        return false;
+    }).filter(article => {
+        if (!state.dateFilter || !state.dateFilter.from || !state.dateFilter.to) return true;
+        if (
+            new Date(article.date)>=state.dateFilter.from.setHours(0,0,0,0)
+            && new Date(article.date)<=state.dateFilter.to.setHours(23,59,59,999))
+            return true;
+        else return false;
+    })
 }))(ArticleList)
