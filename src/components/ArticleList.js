@@ -14,18 +14,31 @@ class ArticleList extends Accordion {
     }
 
     render() {
-        const { articles, selected } = this.props
+        const { articles, selected, dateRange } = this.props
         if (this.state.error) return <h2>{this.state.error}</h2>
-        let articlesFiltered
+        let articlesSelected, articlesFiltered
         if (selected.length) {
-            articlesFiltered = []
+            articlesSelected = []
             selected.forEach(
                 select => articles.forEach(
-                    article => { if (article.title == select.label) articlesFiltered.push(article) }
+                    article => {
+                        if (article.title == select.label) articlesSelected.push(article)
+                    }
                 )
             )  
         } else {
-            articlesFiltered = articles  
+            articlesSelected = articles  
+        }
+        if (dateRange.to) {
+            articlesFiltered = articlesSelected.filter(article => {
+                console.log(Date.parse(dateRange.from),
+                    Date.parse(article.date),
+                    Date.parse(dateRange.to))
+                return Date.parse(dateRange.from) <= Date.parse(article.date)
+                    && Date.parse(article.date) <= Date.parse(dateRange.to)
+            })
+        } else {
+            articlesFiltered = articlesSelected
         }
         if (!articlesFiltered.length) return <h3>No Articles</h3>
         const articleElements = articlesFiltered.map((article) => <li key={article.id}>
@@ -60,5 +73,6 @@ ArticleList.propTypes = {
 
 export default connect((state) => ({
     articles: state.articles,
-    selected: state.selected
+    selected: state.selected,
+    dateRange: state.dateRange
 }))(ArticleList)
