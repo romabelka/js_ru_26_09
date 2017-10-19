@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
 import {filtersValueArticles} from '../../AC'
+import {filtersArticlesByValue} from '../../AC'
 
 class SelectFilter extends Component {
     static propTypes = {
@@ -15,13 +16,15 @@ class SelectFilter extends Component {
     }
 
     handleChange = selected => {
-        const { dispatch } = this.props
+        const { dispatch, filtersTitle } = this.props
 
         console.log(this.props)
 
         const arrIdArticles = selected.map((_item, _index) => (_item.value))
 
-        dispatch(filtersValueArticles(arrIdArticles))
+        dispatch(filtersArticlesByValue(arrIdArticles))
+
+        console.log('filters', filtersTitle);
         this.setState({ selected })
     }
 
@@ -44,6 +47,7 @@ class SelectFilter extends Component {
 
 const mapStateToProps = (state) => ({
     articles: state.articles,
+    filtersTitle: state.filtersTitle,
 })
 
 export default connect(mapStateToProps)(SelectFilter)
