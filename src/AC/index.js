@@ -1,4 +1,4 @@
-import {INCREMENT, DELETE_ARTICLE} from '../constants'
+import {INCREMENT, DELETE_ARTICLE, FILTER_VALUE_ARTICLES} from '../constants'
 
 export function increment() {
     const action = {
@@ -14,3 +14,12 @@ export function deleteArticle(id) {
         payload: { id }
     }
 }
+
+export function filtersValueArticles(arrayIds) {
+    console.log('AC IDs', arrayIds);
+    return {
+        type: FILTER_VALUE_ARTICLES,
+        payload: arrayIds
+    }
+}
+

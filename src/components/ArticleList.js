@@ -4,6 +4,7 @@ import Article from './Article'
 import Accordion from './common/Accordion'
 import {connect} from 'react-redux'
 
+
 class ArticleList extends Accordion {
     constructor(props) {
         super(props)
@@ -12,9 +13,14 @@ class ArticleList extends Accordion {
             error: null
         }
     }
+    componentWillReceiveProps(props) {
+        console.log('--props', props);
+    }
 
     render() {
-        const {articles} = this.props
+        const {articles, state} = this.props
+        console.log('--state', state);
+
         if (this.state.error) return <h2>{this.state.error}</h2>
 
         if (!articles.length) return <h3>No Articles</h3>
@@ -48,6 +54,9 @@ ArticleList.propTypes = {
     articles: PropTypes.array.isRequired
 }
 
-export default connect((state) => ({
-    articles: state.articles
-}))(ArticleList)
+const mapStateToProps = (state) => ({
+    articles: state.articles,
+    state: state,
+})
+
+export default connect(mapStateToProps)(ArticleList)
