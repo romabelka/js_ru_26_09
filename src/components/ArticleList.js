@@ -13,6 +13,7 @@ class ArticleList extends Accordion {
             error: null
         }
     }
+
     componentWillReceiveProps(props) {
         console.log('--props', props);
     }

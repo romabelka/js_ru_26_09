@@ -44,11 +44,6 @@ class SelectFilter extends Component {
 
 const mapStateToProps = (state) => ({
     articles: state.articles,
-    filters: state.filters,
-})
-
-const mapDispatchToProps = () => ({
-    filtersValueArticles,
 })
 
 export default connect(mapStateToProps)(SelectFilter)

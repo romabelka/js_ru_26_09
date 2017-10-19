@@ -1,4 +1,4 @@
-import {INCREMENT, DELETE_ARTICLE, FILTER_VALUE_ARTICLES} from '../constants'
+import {INCREMENT, DELETE_ARTICLE, FILTER_VALUE_ARTICLES, FILTER_DATE_ARTICLES} from '../constants'
 
 export function increment() {
     const action = {
@@ -16,10 +16,17 @@ export function deleteArticle(id) {
 }
 
 export function filtersValueArticles(arrayIds) {
-    console.log('AC IDs', arrayIds);
     return {
         type: FILTER_VALUE_ARTICLES,
         payload: arrayIds
+    }
+}
+
+export function filtersDateArticles(dateRange) {
+    console.log('AC date', dateRange);
+    return {
+        type: FILTER_DATE_ARTICLES,
+        payload: dateRange,
     }
 }
 
