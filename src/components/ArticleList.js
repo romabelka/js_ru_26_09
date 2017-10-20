@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Article from './Article'
 import Accordion from './common/Accordion'
 import {connect} from 'react-redux'
+import {filteredArticlesSelector} from '../selectors'
 
 class ArticleList extends Accordion {
     constructor(props) {
@@ -14,6 +15,7 @@ class ArticleList extends Accordion {
     }
 
     render() {
+        console.log('---', 'article list render')
         const {articles} = this.props
         if (this.state.error) return <h2>{this.state.error}</h2>
 
@@ -49,14 +51,8 @@ ArticleList.propTypes = {
 }
 
 export default connect((state) => {
-    const {selected, dateRange: {from, to}} = state.filters
-
-    const filtratedArticles = state.articles.filter(article => {
-        const published = Date.parse(article.date)
-        return (!selected.length || selected.includes(article.id)) &&
-            (!from || !to || (published > from && published < to))
-    })
+    console.log('---', 'connect')
     return {
-        articles: filtratedArticles
+        articles: filteredArticlesSelector(state)
     }
 })(ArticleList)
