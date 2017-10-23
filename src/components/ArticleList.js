@@ -15,11 +15,11 @@ class ArticleList extends Accordion {
     }
 
     render() {
-        console.log('---', 'article list render')
         const {articles} = this.props
-        if (this.state.error) return <h2>{this.state.error}</h2>
 
+        if (this.state.error) return <h2>{this.state.error}</h2>
         if (!articles.length) return <h3>No Articles</h3>
+
         const articleElements = articles.map((article) => <li key={article.id}>
             <Article article = {article}
                      isOpen = {article.id === this.state.openItemId}
@@ -51,7 +51,6 @@ ArticleList.propTypes = {
 }
 
 export default connect((state) => {
-    console.log('---', 'connect')
     return {
         articles: filteredArticlesSelector(state)
     }
