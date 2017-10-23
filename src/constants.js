@@ -1,3 +1,6 @@
-export const INCREMENT = 'INCREMENT'
+export const INCREMENT = 'INCREMENT';
 
-export const DELETE_ARTICLE = 'DELETE_ARTICLE'
+export const DELETE_ARTICLE = 'DELETE_ARTICLE';
+
+export const SELECT_ARTICLE = 'SELECT_ARTICLE';
+export const UNSELECT_ARTICLE = 'UNSELECT_ARTICLE';

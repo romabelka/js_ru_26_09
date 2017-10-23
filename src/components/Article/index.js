@@ -4,7 +4,7 @@ import CommentList from '../CommentList'
 import {findDOMNode} from 'react-dom'
 import CSSTransition from 'react-addons-css-transition-group'
 import {connect} from 'react-redux'
-import {deleteArticle} from '../../AC'
+import {deleteArticle, unselectArticle} from '../../AC'
 import './style.css'
 
 class Article extends PureComponent {
@@ -71,8 +71,9 @@ class Article extends PureComponent {
     handleDelete = () => {
         //this.props.dispatch(deleteArticle(this.props.article.id))
 //        this.props.deleteArticle(this.props.article.id)
-        const {deleteArticle, article} = this.props
-        deleteArticle(article.id)
+        const {selectedArticles, unselectArticle, deleteArticle, article} = this.props;
+        deleteArticle(article.id);
+        unselectArticle(selectedArticles, article.id);
     }
 
     setHeaderRef = header => {
@@ -92,8 +93,11 @@ class Article extends PureComponent {
         })
     }
 
-    updateTime = () => this.setState({})
+    updateTime = () => this.setState({});
 }
 
+const mapStateToProps = (state) => ({
+    selectedArticles: state.selectedArticles
+})
 
-export default connect(null, { deleteArticle })(Article)
+export default connect(mapStateToProps, { deleteArticle, unselectArticle })(Article)

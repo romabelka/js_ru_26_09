@@ -14,9 +14,8 @@ class ArticleList extends Accordion {
     }
 
     render() {
-        const {articles} = this.props
+        const articles = (this.props.selectedArticles.length) ? this.compileSelectedArticles(this.props.selectedArticles) : this.props.articles;
         if (this.state.error) return <h2>{this.state.error}</h2>
-
         if (!articles.length) return <h3>No Articles</h3>
         const articleElements = articles.map((article) => <li key={article.id}>
             <Article article = {article}
@@ -30,12 +29,13 @@ class ArticleList extends Accordion {
             </ul>
         )
     }
-
-    componentDidCatch(error) {
-        console.log('---', error)
-        this.setState({
-            error: error.message
-        })
+    compileSelectedArticles(selected) {
+        const {articles} = this.props;
+        const articleSelected = [];
+        selected.forEach( select => {
+            articleSelected.push(articles.filter( article => select.value === article.id)[0]);
+        });
+        return articleSelected;
     }
 }
 
@@ -49,5 +49,6 @@ ArticleList.propTypes = {
 }
 
 export default connect((state) => ({
-    articles: state.articles
+    articles: state.articles,
+    selectedArticles: state.selectedArticles
 }))(ArticleList)
