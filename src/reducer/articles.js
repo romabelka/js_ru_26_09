@@ -1,4 +1,4 @@
-import { DELETE_ARTICLE } from '../constants'
+import {DELETE_ARTICLE, SELECT_ARTICLES} from '../constants'
 import defaultArticles from '../fixtures'
 
 export default (articleState = defaultArticles, action) => {
@@ -8,6 +8,8 @@ export default (articleState = defaultArticles, action) => {
         case DELETE_ARTICLE:
             return articleState.filter(article => article.id !== payload.id)
     }
+
+
 
     return articleState
 }
