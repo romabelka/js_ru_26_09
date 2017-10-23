@@ -8,7 +8,6 @@ export default (selectArticlesState = [], action) => {
             if(payload) selectArticlesState = payload;
             return selectArticlesState;
         case UNSELECT_ARTICLE:
-            window.somePayload = payload;
             return payload.selectedArticles.filter(article => article.value !== payload.selected);
     }
 
