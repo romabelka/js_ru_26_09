@@ -63,7 +63,7 @@ class Article extends PureComponent {
         return isOpen && (
                 <div>
                     <section>{article.text}</section>
-                    <CommentList comments = {article.comments} ref = {this.setCommentsRef} key = {this.state.clicked}/>
+                    <CommentList articleId={article.id} comments = {article.comments} ref = {this.setCommentsRef} key = {this.state.clicked}/>
                 </div>
             )
     }
