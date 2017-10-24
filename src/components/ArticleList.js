@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import Article from './Article'
 import Accordion from './common/Accordion'
 import {connect} from 'react-redux'
-import {filteredArticlesSelector} from '../selectors'
+import {filteredArticlesSelector, articlesLoading} from '../selectors'
 import {loadAllArticles} from '../AC'
+import Loader from './common/Loader'
 
 class ArticleList extends Accordion {
     constructor(props) {
@@ -20,8 +21,9 @@ class ArticleList extends Accordion {
 
     render() {
         console.log('---', 'article list render')
-        const {articles} = this.props
+        const {articles, loading} = this.props
         if (this.state.error) return <h2>{this.state.error}</h2>
+        if (loading) return <Loader />
 
         if (!articles.length) return <h3>No Articles</h3>
         const articleElements = articles.map((article) => <li key={article.id}>
@@ -56,6 +58,7 @@ ArticleList.propTypes = {
 
 export default connect((state) => {
     return {
-        articles: filteredArticlesSelector(state)
+        articles: filteredArticlesSelector(state),
+        loading: articlesLoading(state)
     }
 }, { loadAllArticles })(ArticleList)
