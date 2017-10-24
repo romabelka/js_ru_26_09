@@ -5,17 +5,20 @@ import {findDOMNode} from 'react-dom'
 import CSSTransition from 'react-addons-css-transition-group'
 import {connect} from 'react-redux'
 import {deleteArticle} from '../../AC'
+import {createArticleSelector} from '../../selectors'
 import './style.css'
 
 class Article extends PureComponent {
     static propTypes = {
+        id: PropTypes.string.isRequired,
+        isOpen: PropTypes.bool,
+        onButtonClick: PropTypes.func,
+        //from connect
         article: PropTypes.shape({
             title: PropTypes.string.isRequired,
             text: PropTypes.string,
             date: PropTypes.string.isRequired
-        }).isRequired,
-        isOpen: PropTypes.bool,
-        onButtonClick: PropTypes.func
+        }).isRequired
     }
 
     state = {
@@ -29,6 +32,7 @@ class Article extends PureComponent {
      */
 
     render() {
+        console.log("render ARTICLE");
         const {article, isOpen, onButtonClick} = this.props
         if (this.state.clicked > 3) throw new Error('clicked more then 3 times')
 
@@ -63,9 +67,13 @@ class Article extends PureComponent {
         return isOpen && (
                 <div>
                     <section>{article.text}</section>
-                    <CommentList comments = {article.comments} ref = {this.setCommentsRef} key = {this.state.clicked}/>
+                    <CommentList comments = {article.comments} ref = {this.setCommentsRef} key = {this.state.clicked} articleId={article.id}/>
                 </div>
             )
+    }
+
+    handleAddComment = () => {
+
     }
 
     handleDelete = () => {
@@ -95,5 +103,12 @@ class Article extends PureComponent {
     updateTime = () => this.setState({})
 }
 
+const createMapStateToProps = () => {
+    const articleSelector = createArticleSelector()
 
-export default connect(null, { deleteArticle })(Article)
+    return (state, ownProps) => ({
+        article: articleSelector(state, ownProps)
+    })
+}
+
+export default connect(createMapStateToProps, { deleteArticle })(Article)

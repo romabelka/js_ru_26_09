@@ -9,21 +9,21 @@ class ArticleList extends Accordion {
     constructor(props) {
         super(props)
         this.state = {
-            openItemId: props.articles[0].id,
+            openItemId: props.articles[0],
             error: null
         }
     }
 
     render() {
-        console.log('---', 'article list render')
+        console.log('---', 'article list render', this.props)
         const {articles} = this.props
         if (this.state.error) return <h2>{this.state.error}</h2>
 
         if (!articles.length) return <h3>No Articles</h3>
-        const articleElements = articles.map((article) => <li key={article.id}>
-            <Article article = {article}
-                     isOpen = {article.id === this.state.openItemId}
-                     onButtonClick = {this.toggleOpenItemMemoized(article.id)}
+        const articleElements = articles.map((id) => <li key={id}>
+            <Article id = {id}
+                     isOpen = {id === this.state.openItemId}
+                     onButtonClick = {this.toggleOpenItemMemoized(id)}
             />
         </li>)
         return (
