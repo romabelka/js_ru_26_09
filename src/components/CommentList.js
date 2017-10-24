@@ -5,17 +5,17 @@ import PropTypes from 'prop-types'
 import toggleOpen from '../decorators/toggleOpen'
 
 function CommentList(props) {
-    const {comments, isOpen, toggleOpen} = props
+    const {comments, isOpen, toggleOpen, articleId} = props
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
         <div>
             <button onClick={toggleOpen}>{text}</button>
-            {getBody({ isOpen, comments })}
+            {getBody({ isOpen, comments, articleId })}
         </div>
     )
 }
 
-function getBody({comments, isOpen}) {
+function getBody({comments, isOpen, articleId}) {
     if (!isOpen) return null
 
     const body = comments.length ? (
@@ -27,7 +27,7 @@ function getBody({comments, isOpen}) {
     return (
         <div>
             {body}
-            <CommentForm />
+            <CommentForm articleId={articleId}/>
         </div>
     )
 }

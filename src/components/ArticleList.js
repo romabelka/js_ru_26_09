@@ -51,7 +51,6 @@ ArticleList.propTypes = {
 }
 
 export default connect((state) => {
-    console.log('---', 'connect')
     return {
         articles: filteredArticlesSelector(state)
     }
