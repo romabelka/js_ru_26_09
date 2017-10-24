@@ -4,14 +4,18 @@ import Article from './Article'
 import Accordion from './common/Accordion'
 import {connect} from 'react-redux'
 import {filteredArticlesSelector} from '../selectors'
+import {loadAllArticles} from '../AC'
 
 class ArticleList extends Accordion {
     constructor(props) {
         super(props)
         this.state = {
-            openItemId: props.articles[0].id,
             error: null
         }
+    }
+
+    componentDidMount() {
+        this.props.loadAllArticles()
     }
 
     render() {
@@ -51,8 +55,7 @@ ArticleList.propTypes = {
 }
 
 export default connect((state) => {
-    console.log('---', 'connect')
     return {
         articles: filteredArticlesSelector(state)
     }
-})(ArticleList)
+}, { loadAllArticles })(ArticleList)
