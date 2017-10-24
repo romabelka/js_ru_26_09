@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { addComment } from '../../AC'
 import './style.css'
+
 
 class CommentForm extends Component {
     static propTypes = {
@@ -12,24 +15,29 @@ class CommentForm extends Component {
 
     render() {
         return (
-            <form onSubmit = {this.handleSubmit}>
-                user: <input value = {this.state.user}
-                             onChange = {this.handleChange('user')}
-                             className = {this.getClassName('user')} />
-                comment: <textarea value = {this.state.text}
-                                onChange = {this.handleChange('text')}
-                                className = {this.getClassName('text')} />
-                <input type = "submit" value = "submit" disabled = {!this.isValidForm()}/>
+            <form onSubmit={this.handleSubmit}>
+                user: <input value={this.state.user}
+                    onChange={this.handleChange('user')}
+                    className={this.getClassName('user')} />
+                comment: <textarea value={this.state.text}
+                    onChange={this.handleChange('text')}
+                    className={this.getClassName('text')} />
+                <input type="submit" value="submit" disabled={!this.isValidForm()} />
             </form>
         )
     }
 
     handleSubmit = ev => {
-        ev.preventDefault()
-        this.setState({
-            user: '',
-            text: ''
+        ev.preventDefault();
+        console.log('commentForm', this.props);
+        this.props.addComment({
+            comment: {
+                user: this.state.user,
+                text: this.state.text
+            },
+            articleId: this.props.articleId
         })
+        this.setState({ user: '', text: '' });
     }
 
     isValidForm = () => ['user', 'text'].every(this.isValidField)
@@ -39,7 +47,7 @@ class CommentForm extends Component {
     getClassName = type => this.isValidField(type) ? '' : 'form-input__error'
 
     handleChange = type => ev => {
-        const {value} = ev.target
+        const { value } = ev.target
         if (value.length > limits[type].max) return
         this.setState({
             [type]: value
@@ -58,4 +66,4 @@ const limits = {
     }
 }
 
-export default CommentForm
+export default connect(null, { addComment })(CommentForm)
