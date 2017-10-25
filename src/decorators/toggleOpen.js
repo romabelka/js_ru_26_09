@@ -5,7 +5,7 @@ export default (OriginalComponent) => class DecoratedComponent extends React.Com
     constructor(props) {
         super(props)
         this.state = {
-            isOpen: props.defaultOpen
+            isOpen: false
         }
     }
 
