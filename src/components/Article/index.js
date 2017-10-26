@@ -4,7 +4,8 @@ import CommentList from '../CommentList'
 import {findDOMNode} from 'react-dom'
 import CSSTransition from 'react-addons-css-transition-group'
 import {connect} from 'react-redux'
-import {deleteArticle} from '../../AC'
+import {deleteArticle, loadArticleById} from '../../AC'
+import Loader from '../common/Loader'
 import './style.css'
 
 class Article extends PureComponent {
@@ -27,6 +28,10 @@ class Article extends PureComponent {
      return this.props.isOpen !== nextProps.isOpen
      }
      */
+
+    componentWillReceiveProps({ isOpen, article, loadArticleById }) {
+        if (isOpen && !this.props.isOpen && !article.loading && !article.text) loadArticleById(article.id)
+    }
 
     render() {
         const {article, isOpen, onButtonClick} = this.props
@@ -60,10 +65,11 @@ class Article extends PureComponent {
 
     getBody() {
         const {isOpen, article} = this.props
+        if (article.loading) return <Loader/>
         return isOpen && (
                 <div>
                     <section>{article.text}</section>
-                    <CommentList comments = {article.comments} ref = {this.setCommentsRef} key = {this.state.clicked}/>
+                    <CommentList article = {article} ref = {this.setCommentsRef} key = {this.state.clicked}/>
                 </div>
             )
     }
@@ -96,4 +102,4 @@ class Article extends PureComponent {
 }
 
 
-export default connect(null, { deleteArticle })(Article)
+export default connect(null, { deleteArticle, loadArticleById })(Article)
