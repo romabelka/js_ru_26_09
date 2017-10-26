@@ -6,7 +6,7 @@
   "scripts": {
     "start": "concurrently \"npm run dev\" \"npm run api\"",
     "api": "node simple_api/server.js",
-    "dev": "webpack-dev-server --hot --inline",
+    "dev": "webpack-dev-server --hot --inline --port 3002",
     "build": "webpack"
   },
   "repository": {
@@ -26,7 +26,7 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.5.0",
-    "webpack": "^3.0.0",
+    "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1"
   },
   "dependencies": {
