@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {createCommentSelector} from '../selectors'
+import {commentsLoaded, commentsLoading, createCommentSelector} from '../selectors'
+import toggleOpen from "../decorators/toggleOpen";
+import {loadAllComments} from "../AC";
 
 function Comment({comment}) {
     return (
@@ -20,12 +22,13 @@ Comment.propTypes = {
     }).isRequired
 }
 
-const createMapStateToProps = () => {
+
+export default connect( () => {
+
     const commentSelector = createCommentSelector()
 
     return (state, ownProps) => ({
         comment: commentSelector(state, ownProps)
     })
-}
 
-export default connect(createMapStateToProps)(Comment)
+})(Comment)

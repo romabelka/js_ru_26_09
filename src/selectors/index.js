@@ -4,6 +4,8 @@ export const filtersSelector = state => state.filters
 export const articlesMapSelector = state => state.articles.entities
 export const articlesLoading = state => state.articles.loading
 export const commentsSelector = state => state.comments
+export const commentsLoading = state => state.comments.loading
+export const commentsLoaded = state => state.comments.loaded
 export const idSelector = (_, props) => props.id
 
 
@@ -23,6 +25,7 @@ export const filteredArticlesSelector = createSelector(articlesSelector, filters
 export const createCommentSelector = () => {
     return createSelector(commentsSelector, idSelector, (comments, id) => {
         console.log('---', 'comment selector', id)
-        return comments.get(id)
+
+        return comments.entities.get(id);
     })
 }
