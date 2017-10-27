@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import App from './App'
 import {Provider} from 'react-redux'
-import {HashRouter} from 'react-router-dom'
+import {BrowserRouter} from 'react-router-dom'
 
 class Root extends Component {
     static propTypes = {
@@ -13,9 +13,9 @@ class Root extends Component {
         const {store} = this.props
         return (
             <Provider store = {store}>
-                <HashRouter>
+                <BrowserRouter>
                    <App />
-                </HashRouter>
+                </BrowserRouter>
             </Provider>
         )
     }
