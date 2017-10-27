@@ -61,7 +61,10 @@ export function loadArticleById(id) {
 */
 
 export function loadArticleById(id) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const article = getState().articles.getIn(['entities', id])
+        if (article && (article.text || article.loading)) return
+
         dispatch({
             type: LOAD_ARTICLE + START,
             payload: { id }
