@@ -39,9 +39,14 @@ export function addComment(comment, articleId) {
 }
 
 export function loadAllArticles() {
-    return {
-        type: LOAD_ALL_ARTICLES,
-        callAPI: '/api/article'
+    return (dispatch, getState) => {
+        const { loading, loaded } = getState().articles
+        if (loading || loaded) return
+
+        dispatch({
+            type: LOAD_ALL_ARTICLES,
+            callAPI: '/api/article'
+        })
     }
 }
 /*
