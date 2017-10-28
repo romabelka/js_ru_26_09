@@ -3,9 +3,8 @@ import {createSelector} from 'reselect'
 export const filtersSelector = state => state.filters
 export const articlesMapSelector = state => state.articles.entities
 export const articlesLoading = state => state.articles.loading
-export const commentsSelector = state => state.comments
+export const commentsSelector = state => state.comments.entities
 export const idSelector = (_, props) => props.id
-
 
 export const articlesSelector = createSelector(articlesMapSelector, articles => articles.valueSeq().toArray())
 

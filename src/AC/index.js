@@ -1,6 +1,6 @@
 import {
-    INCREMENT, DELETE_ARTICLE, CHANGE_DATE_RANGE, CHANGE_SELECTION, ADD_COMMENT, LOAD_ALL_ARTICLES, LOAD_ARTICLE, START,
-    SUCCESS, ERROR
+    INCREMENT, DELETE_ARTICLE, CHANGE_DATE_RANGE, CHANGE_SELECTION, ADD_COMMENT, LOAD_ALL_ARTICLES, LOAD_ARTICLE,
+    LOAD_ARTICLE_COMMENTS, START, SUCCESS, ERROR
 } from '../constants'
 
 export function increment() {
@@ -39,9 +39,14 @@ export function addComment(comment, articleId) {
 }
 
 export function loadAllArticles() {
-    return {
-        type: LOAD_ALL_ARTICLES,
-        callAPI: '/api/article'
+    return (dispatch, getState) => {
+        const { loading, loaded } = getState().articles
+        if (loading || loaded) return
+
+        dispatch({
+            type: LOAD_ALL_ARTICLES,
+            callAPI: '/api/article'
+        })
     }
 }
 /*
@@ -56,7 +61,10 @@ export function loadArticleById(id) {
 */
 
 export function loadArticleById(id) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const article = getState().articles.getIn(['entities', id])
+        if (article && (article.text || article.loading)) return
+
         dispatch({
             type: LOAD_ARTICLE + START,
             payload: { id }
@@ -73,5 +81,13 @@ export function loadArticleById(id) {
                 payload: { id, error }
             }))
         , 1000)
+    }
+}
+
+export function loadArticleComments(articleId) {
+    return {
+        type: LOAD_ARTICLE_COMMENTS,
+        payload: { articleId },
+        callAPI: `/api/comment?article=${articleId}`
     }
 }

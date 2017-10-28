@@ -1,7 +1,6 @@
 import React, {Component, PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import CommentList from '../CommentList'
-import {findDOMNode} from 'react-dom'
 import CSSTransition from 'react-addons-css-transition-group'
 import {connect} from 'react-redux'
 import {deleteArticle, loadArticleById} from '../../AC'
@@ -10,13 +9,15 @@ import './style.css'
 
 class Article extends PureComponent {
     static propTypes = {
+        id: PropTypes.string,
+        isOpen: PropTypes.bool,
+        onButtonClick: PropTypes.func,
+        //connect
         article: PropTypes.shape({
             title: PropTypes.string.isRequired,
             text: PropTypes.string,
             date: PropTypes.string.isRequired
-        }).isRequired,
-        isOpen: PropTypes.bool,
-        onButtonClick: PropTypes.func
+        }),
     }
 
     state = {
@@ -29,12 +30,14 @@ class Article extends PureComponent {
      }
      */
 
-    componentWillReceiveProps({ isOpen, article, loadArticleById }) {
-        if (isOpen && !this.props.isOpen && !article.loading && !article.text) loadArticleById(article.id)
+    componentDidMount() {
+        const { isOpen, loadArticleById, id } = this.props
+        if (isOpen) loadArticleById(id)
     }
 
     render() {
         const {article, isOpen, onButtonClick} = this.props
+        if (!article) return null
         if (this.state.clicked > 3) throw new Error('clicked more then 3 times')
 
         return (
@@ -102,4 +105,6 @@ class Article extends PureComponent {
 }
 
 
-export default connect(null, { deleteArticle, loadArticleById })(Article)
+export default connect((state, { id }) => ({
+    article: state.articles.getIn(['entities', id])
+}), { deleteArticle, loadArticleById })(Article)
