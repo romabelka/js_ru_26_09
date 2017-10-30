@@ -1,10 +1,10 @@
-import {START, SUCCESS, ERROR, LOAD_ALL_ARTICLES} from '../constants'
+import {START, SUCCESS, ERROR} from '../constants'
 
 export default store => next => action => {
     const {callAPI, type, ...rest} = action
 
     if (!callAPI) return next(action)
-
+    console.log("callAPI:", callAPI);
     next({
         type: type + START,
         ...rest
