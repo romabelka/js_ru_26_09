@@ -1,6 +1,6 @@
-import { ADD_COMMENT, LOAD_ARTICLE_COMMENTS, SUCCESS } from '../constants'
-import {arrToMap} from './utils'
-import {OrderedMap, Map, Record} from 'immutable'
+import { ADD_COMMENT, LOAD_ARTICLE_COMMENTS, LOAD_COMMENTS, START, SUCCESS } from '../constants'
+import {arrToMap, fillList} from './utils'
+import {OrderedMap, Map, Record, List} from 'immutable'
 
 const CommentRecord = Record({
     id: null,
@@ -9,12 +9,14 @@ const CommentRecord = Record({
 })
 
 const ReducerState = Record({
-    entities: new OrderedMap({})
+    entities: new OrderedMap({}),
+    entitiesIdList: new List(),
+    loading: false
 })
 
 
 export default (state = new ReducerState(), action) => {
-    const { type, payload, response, randomId } = action
+    const { type, payload, response, randomId, offset } = action
 
     switch (type) {
         case ADD_COMMENT:
@@ -22,6 +24,20 @@ export default (state = new ReducerState(), action) => {
 
         case LOAD_ARTICLE_COMMENTS + SUCCESS:
             return state.mergeIn(['entities'], arrToMap(response, CommentRecord))
+
+        case LOAD_COMMENTS + START:
+            return state.set('loading', true)
+
+        case LOAD_COMMENTS + SUCCESS:
+            return state
+                .set('loading', false)
+                .mergeIn(['entities'], arrToMap(response.records, CommentRecord))
+                .updateIn(['entitiesIdList'], list => fillList(
+                    list,
+                    offset,
+                    response.total,
+                    response.records.reduce((acc, item) => acc.push(item.id), new List())
+                ))
     }
 
     return state
