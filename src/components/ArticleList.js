@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom'
 import {filteredArticlesSelector, articlesLoading} from '../selectors'
 import {loadAllArticles} from '../AC'
 import Loader from './common/Loader'
+import AllCommentList from './AllCommentList'
 
 class ArticleList extends Accordion {
     constructor(props) {
@@ -30,9 +31,12 @@ class ArticleList extends Accordion {
             <NavLink to = {`/articles/${article.id}`} activeStyle = {{color: 'red'}}>{article.title}</NavLink>
         </li>)
         return (
-            <ul>
-                {articleElements}
-            </ul>
+            <div>
+                <ul>
+                    {articleElements}
+                </ul>
+                <AllCommentList/>
+            </div>
         )
     }
 
