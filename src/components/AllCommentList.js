@@ -49,7 +49,6 @@ class AllCommentList extends Component {
         if (!allComments.length) return <h2>Комментарии отсутствуют</h2>
         return (
             <div>
-                {this.getComments()}
                 {this.getPagination()}
             </div>
         )
