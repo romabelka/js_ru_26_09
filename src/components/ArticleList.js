@@ -56,4 +56,4 @@ export default connect((state) => {
         articles: filteredArticlesSelector(state),
         loading: articlesLoading(state)
     }
-}, { loadAllArticles })(ArticleList)
+}, { loadAllArticles }, null, { pure: false })(ArticleList)

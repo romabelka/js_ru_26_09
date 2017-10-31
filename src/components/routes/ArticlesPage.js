@@ -9,6 +9,7 @@ class ArticlesPage extends Component {
     };
 
     render() {
+        console.log('---', 2)
         return (
             <div>
                 <ArticleList/>
@@ -19,6 +20,7 @@ class ArticlesPage extends Component {
 
     getArticlePage = ({ match }) => {
         if (!match) return <h2>Please select an article</h2>
+        console.log('---', 3)
         return <Article id={match.params.id} isOpen key = {match.params.id} />
     }
 

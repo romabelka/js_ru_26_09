@@ -88,7 +88,7 @@ export function loadArticleById(id) {
                     payload: { id, error }
                 })
             })
-        , 1000)
+        , 500)
     }
 }
 

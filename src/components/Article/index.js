@@ -7,7 +7,7 @@ import {deleteArticle, loadArticleById} from '../../AC'
 import Loader from '../common/Loader'
 import './style.css'
 
-class Article extends PureComponent {
+class Article extends Component {
     static propTypes = {
         id: PropTypes.string,
         isOpen: PropTypes.bool,
@@ -39,7 +39,7 @@ class Article extends PureComponent {
         const {article, isOpen, onButtonClick} = this.props
         if (!article) return null
         if (this.state.clicked > 3) throw new Error('clicked more then 3 times')
-
+        console.log('---', 4)
         return (
             <div>
                 <h2 ref = {this.setHeaderRef}>
@@ -107,4 +107,4 @@ class Article extends PureComponent {
 
 export default connect((state, { id }) => ({
     article: state.articles.getIn(['entities', id])
-}), { deleteArticle, loadArticleById })(Article)
+}), { deleteArticle, loadArticleById }, null, { pure: false })(Article)

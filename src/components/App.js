@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {Route, NavLink, Switch, Redirect} from 'react-router-dom'
 import ArticlesPage from './routes/ArticlesPage'
 import CommentsPage from './routes/CommentsPage'
@@ -8,6 +9,16 @@ import Counter from './Counter'
 import Menu, {MenuItem} from './Menu'
 
 class App extends Component {
+    static childContextTypes = {
+        user: PropTypes.string
+    }
+
+    getChildContext() {
+        return {
+            user: this.state.username
+        }
+    }
+
     state = {
         username: ''
     }
@@ -15,6 +26,7 @@ class App extends Component {
     handleUserChange = username => this.setState({ username })
 
     render() {
+        console.log('---', 1)
         return (
             <div>
                 <h1>App name</h1>
