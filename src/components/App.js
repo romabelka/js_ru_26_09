@@ -25,6 +25,7 @@ class App extends Component {
                     <Route path = '/articles/new' render = {this.getNewArticle}/>
                     <Route path = '/articles' component = {ArticlesPage}/>
                     <Route path = '/comments' component = {CommentsPage}/>
+                    <Route path = '/error' render = {this.getError}/>
                     <Route path = '*' render = {this.notFound}/>
                 </Switch>
             </div>
@@ -33,6 +34,7 @@ class App extends Component {
 
     getNewArticle = () => <h1>New Article Page</h1>
     notFound = () => <h1>Not Found</h1>
+    getError = () => <h1>Some Error</h1>
 }
 
 App.propTypes = {
