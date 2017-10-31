@@ -20,7 +20,6 @@ class ArticleList extends Accordion {
     }
 
     render() {
-        console.log('---', 'article list render')
         const {articles, loading} = this.props
         if (this.state.error) return <h2>{this.state.error}</h2>
         if (loading) return <Loader />
@@ -37,7 +36,6 @@ class ArticleList extends Accordion {
     }
 
     componentDidCatch(error) {
-        console.log('---', error)
         this.setState({
             error: error.message
         })

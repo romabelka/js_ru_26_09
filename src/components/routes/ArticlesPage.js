@@ -9,7 +9,6 @@ class ArticlesPage extends Component {
     };
 
     render() {
-        console.log('---', 'ArticlesPage', this.props.match)
         return (
             <div>
                 <ArticleList/>
@@ -19,7 +18,6 @@ class ArticlesPage extends Component {
     }
 
     getArticlePage = ({ match }) => {
-        console.log('---', 'Article match', match)
         if (!match) return <h2>Please select an article</h2>
         return <Article id={match.params.id} isOpen key = {match.params.id} />
     }

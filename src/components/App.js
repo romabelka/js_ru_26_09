@@ -8,6 +8,12 @@ import Counter from './Counter'
 import Menu, {MenuItem} from './Menu'
 
 class App extends Component {
+    state = {
+        username: ''
+    }
+
+    handleUserChange = username => this.setState({ username })
+
     render() {
         return (
             <div>
@@ -18,7 +24,7 @@ class App extends Component {
                     <MenuItem to = '/articles' >articles</MenuItem>
                     <MenuItem to = '/comments' >comments</MenuItem>
                 </Menu>
-                <UserForm />
+                <UserForm value = {this.state.username} onChange = {this.handleUserChange}/>
                 <Switch>
                     <Redirect from = '/' to = '/articles' exact />
                     <Route path = '/counter' component = {Counter}/>
