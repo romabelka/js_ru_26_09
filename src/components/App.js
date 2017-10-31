@@ -5,18 +5,19 @@ import CommentsPage from './routes/CommentsPage'
 import Filters from './Filters'
 import UserForm from './UserForm'
 import Counter from './Counter'
+import Menu, {MenuItem} from './Menu'
 
 class App extends Component {
     render() {
         return (
             <div>
                 <h1>App name</h1>
-                <ul>
-                    <li><NavLink to = '/counter' activeStyle = {{color:'red'}}>counter</NavLink></li>
-                    <li><NavLink to = '/filters' activeStyle = {{color:'red'}}>filters</NavLink></li>
-                    <li><NavLink to = '/articles' activeStyle = {{color:'red'}}>articles</NavLink></li>
-                    <li><NavLink to = '/comments/1' activeStyle = {{color: 'red'}}>comments</NavLink></li>
-                </ul>
+                <Menu>
+                    <MenuItem to = '/counter' >counter</MenuItem>
+                    <MenuItem to = '/filters' >filters</MenuItem>
+                    <MenuItem to = '/articles' >articles</MenuItem>
+                    <MenuItem to = '/comments' >comments</MenuItem>
+                </Menu>
                 <UserForm />
                 <Switch>
                     <Redirect from = '/' to = '/articles' exact />
