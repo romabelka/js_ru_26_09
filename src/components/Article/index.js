@@ -29,16 +29,21 @@ class Article extends Component {
      return this.props.isOpen !== nextProps.isOpen
      }
      */
+    componentWillReceiveProps({  isOpen, loadArticleById, id, loading }) {
+        if (isOpen && !loading) loadArticleById(id)
+    }
 
     componentDidMount() {
-        const { isOpen, loadArticleById, id } = this.props
-        if (isOpen) loadArticleById(id)
+        const { isOpen, loadArticleById, id, loading } = this.props
+        if (isOpen && !loading) loadArticleById(id)
     }
 
     render() {
-        const {article, isOpen, onButtonClick} = this.props
+        const {article, isOpen, allLoaded, onButtonClick} = this.props
         if (!article) return null
         if (this.state.clicked > 3) throw new Error('clicked more then 3 times')
+        if (!allLoaded || article.loading) return <Loader/>
+        // todo как тут может возникать ошибка The prop `article.title` is marked as required in `Article`, but its value is `undefined` ??
         console.log('---', 4)
         return (
             <div>
@@ -106,5 +111,7 @@ class Article extends Component {
 
 
 export default connect((state, { id }) => ({
-    article: state.articles.getIn(['entities', id])
+    article: state.articles.getIn(['entities', id]),
+    loading: state.articles.getIn(['entities', id, 'loading']),
+    allLoaded: state.articles.getIn(['loaded'])
 }), { deleteArticle, loadArticleById }, null, { pure: false })(Article)
