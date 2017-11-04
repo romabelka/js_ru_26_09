@@ -24,6 +24,10 @@ class Article extends Component {
         clicked: 0
     }
 
+    static contextTypes = {
+        dictionary: PropTypes.object
+    }
+
     /*
      shouldComponentUpdate(nextProps) {
      return this.props.isOpen !== nextProps.isOpen
@@ -45,17 +49,18 @@ class Article extends Component {
         if (!allLoaded || article.loading) return <Loader/>
         // todo как тут может возникать ошибка The prop `article.title` is marked as required in `Article`, but its value is `undefined` ??
         console.log('---', 4)
+        const dict = this.context.dictionary
         return (
             <div>
                 <h2 ref = {this.setHeaderRef}>
                     {article.title}
                     <button onClick={onButtonClick}>
-                        {isOpen ? 'close' : 'open'}
+                        {isOpen ? dict.close : dict.open}
                     </button>
-                    <a href="#" onClick = {this.increment}>clicked {this.state.clicked} times</a>
-                    <button onClick = {this.handleDelete}>delete me</button>
+                    <a href="#" onClick = {this.increment}>{dict.clicked} {this.state.clicked} {dict.times}</a>
+                    <button onClick = {this.handleDelete}>{dict.delete_me}</button>
                 </h2>
-                <h3 onClick = {this.updateTime}>Time now: {(new Date).toString()}</h3>
+                <h3 onClick = {this.updateTime}>{dict.time_now}: {(new Date).toString()}</h3>
                 <CSSTransition
                     transitionName = 'article'
                     transitionEnterTimeout = {500}
@@ -66,7 +71,7 @@ class Article extends Component {
                 >
                     {this.getBody()}
                 </CSSTransition>
-                <h3>creation date: {(new Date(article.date)).toDateString()}</h3>
+                <h3>{dict.creation_date}: {(new Date(article.date)).toDateString()}</h3>
             </div>
         )
     }

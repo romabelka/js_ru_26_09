@@ -8,21 +8,26 @@ class CommentForm extends Component {
     static propTypes = {
     };
 
+    static contextTypes = {
+        dictionary: PropTypes.object
+    }
+
     state = {
         user: '',
         text: ''
     }
 
     render() {
+        const dict = this.context.dictionary
         return (
             <form onSubmit = {this.handleSubmit}>
-                user: <input value = {this.state.user}
+                {dict.user}: <input value = {this.state.user}
                              onChange = {this.handleChange('user')}
                              className = {this.getClassName('user')} />
-                comment: <input value = {this.state.text}
+                {dict.comment}: <input value = {this.state.text}
                                 onChange = {this.handleChange('text')}
                                 className = {this.getClassName('text')} />
-                <input type = "submit" value = "submit"/>
+                <input type = "submit" value = {dict.submit}/>
             </form>
         )
     }

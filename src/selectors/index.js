@@ -1,4 +1,5 @@
 import {createSelector} from 'reselect'
+import dictionary from '../dictionary'
 
 export const filtersSelector = state => state.filters
 export const articlesMapSelector = state => state.articles.entities
@@ -24,4 +25,15 @@ export const createCommentSelector = () => {
         console.log('---', 'comment selector', id)
         return comments.get(id)
     })
+}
+
+
+export const languageSelector = () => {
+    var lng = navigator.browserLanguage || navigator.language || navigator.userLanguage;
+    console.log('---', 'language selector', lng)
+
+    if ('ru' === lng)
+        return dictionary.ru;
+
+    return dictionary.en
 }

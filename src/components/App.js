@@ -10,13 +10,18 @@ import Menu, {MenuItem} from './Menu'
 
 class App extends Component {
     static childContextTypes = {
-        user: PropTypes.string
+        user: PropTypes.string,
+        dictionary: PropTypes.object
     }
 
     getChildContext() {
         return {
             user: this.state.username
         }
+    }
+
+    static contextTypes = {
+        dictionary: PropTypes.object
     }
 
     state = {
@@ -26,15 +31,16 @@ class App extends Component {
     handleUserChange = username => this.setState({ username })
 
     render() {
-        console.log('---', 1)
+        console.log('---', '1',this.context.dictionary)
+        const dict = this.context.dictionary
         return (
             <div>
-                <h1>App name</h1>
+                <h1>{dict.app_name}</h1>
                 <Menu>
-                    <MenuItem to = '/counter' >counter</MenuItem>
-                    <MenuItem to = '/filters' >filters</MenuItem>
-                    <MenuItem to = '/articles' >articles</MenuItem>
-                    <MenuItem to = '/comments' >comments</MenuItem>
+                    <MenuItem to = '/counter' >{dict.counter}</MenuItem>
+                    <MenuItem to = '/filters' >{dict.filters}</MenuItem>
+                    <MenuItem to = '/articles' >{dict.articles}</MenuItem>
+                    <MenuItem to = '/comments' >{dict.comments}</MenuItem>
                 </Menu>
                 <UserForm value = {this.state.username} onChange = {this.handleUserChange}/>
                 <Switch>
