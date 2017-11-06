@@ -11,7 +11,8 @@ class CommentList extends Component {
     static contextTypes = {
         store: PropTypes.object,
         router: PropTypes.object,
-        user: PropTypes.string
+        user: PropTypes.string,
+        words: PropTypes.object
     }
 
     static defaultProps = {
@@ -33,10 +34,10 @@ class CommentList extends Component {
     render() {
         console.log('---', 5)
         const {isOpen, toggleOpen} = this.props
-        const text = isOpen ? 'hide comments' : 'show comments'
+        const text = isOpen ? this.context.words.hideComments : this.context.words.showComments
         return (
             <div>
-                <h3>User: {this.context.user}</h3>
+                <h3>{this.context.words.user}: {this.context.user}</h3>
                 <button onClick={toggleOpen}>{text}</button>
                 {this.getBody()}
             </div>
