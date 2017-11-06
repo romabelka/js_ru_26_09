@@ -10,26 +10,63 @@ import Menu, {MenuItem} from './Menu'
 
 class App extends Component {
     static childContextTypes = {
-        user: PropTypes.string
+        user: PropTypes.string,
+        words: PropTypes.array
     }
 
     getChildContext() {
         return {
-            user: this.state.username
+            user: this.state.username,
+            words: this.state.words
         }
     }
 
     state = {
-        username: ''
+        username: '',
+        words: {
+            'mainMenu': 'Main menu',
+            'user': 'User',
+            'username': 'Username',
+            'hideComments': 'hide comments',
+            'showComments': 'show comments'
+        }
     }
 
     handleUserChange = username => this.setState({ username })
+
+    pickEng = () => {
+        this.setState({
+            words: {
+                'mainMenu': 'Main menu',
+                'user': 'User',
+                'username': 'Username',
+                'hideComments': 'hide comments',
+                'showComments': 'show comments'
+            }    
+        })
+    }
+
+    pickRus = () => {
+        this.setState({
+            words: {
+                'mainMenu': 'Главное меню',
+                'user': 'Пользователь',
+                'username': 'Имя пользователя',
+                'hideComments': 'Спрятать комментарии',
+                'showComments': 'Показать комментарии'
+            }
+        })
+    }
 
     render() {
         console.log('---', 1)
         return (
             <div>
                 <h1>App name</h1>
+                <div>
+                    <button onClick={this.pickEng}>Eng</button>
+                    <button onClick={this.pickRus}>Rus</button>
+                </div>
                 <Menu>
                     <MenuItem to = '/counter' >counter</MenuItem>
                     <MenuItem to = '/filters' >filters</MenuItem>

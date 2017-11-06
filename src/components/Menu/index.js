@@ -7,10 +7,14 @@ class Menu extends Component {
 
     };
 
+    static contextTypes = {
+        words: PropTypes.object
+    }
+
     render() {
         return (
             <div>
-                <h2>Main Menu</h2>
+                <h2>{this.context.words.mainMenu}</h2>
                 <ul>
                     {this.props.children}
                 </ul>
