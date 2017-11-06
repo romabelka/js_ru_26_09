@@ -39,7 +39,10 @@ export default (state = defaultState, action) => {
             return state
                 .set('loading', false)
                 .set('loaded', true)
-                .set('entities', arrToMap(response, ArticleRecord))
+                .update('entities', arr => arr.mergeWith((prev, next) => {
+                    return (prev ? prev : next)
+                 },
+                arrToMap(response, ArticleRecord)))
 
         case LOAD_ARTICLE + START:
             return state.setIn(['entities', payload.id, 'loading'], true)
