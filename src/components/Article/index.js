@@ -14,10 +14,14 @@ class Article extends Component {
         onButtonClick: PropTypes.func,
         //connect
         article: PropTypes.shape({
-            title: PropTypes.string.isRequired,
+            title: PropTypes.string,
             text: PropTypes.string,
-            date: PropTypes.string.isRequired
+            date: PropTypes.string
         }),
+    }
+
+    static contextTypes = {
+        dict: PropTypes.object
     }
 
     state = {
@@ -39,18 +43,17 @@ class Article extends Component {
         const {article, isOpen, onButtonClick} = this.props
         if (!article) return null
         if (this.state.clicked > 3) throw new Error('clicked more then 3 times')
-        console.log('---', 4)
         return (
             <div>
                 <h2 ref = {this.setHeaderRef}>
                     {article.title}
                     <button onClick={onButtonClick}>
-                        {isOpen ? 'close' : 'open'}
+                        {isOpen ? this.context.dict["close"] : this.context.dict["open"]}
                     </button>
                     <a href="#" onClick = {this.increment}>clicked {this.state.clicked} times</a>
-                    <button onClick = {this.handleDelete}>delete me</button>
+                    <button onClick = {this.handleDelete}>{this.context.dict["delete"]}</button>
                 </h2>
-                <h3 onClick = {this.updateTime}>Time now: {(new Date).toString()}</h3>
+                <h3 onClick = {this.updateTime}>{this.context.dict["timeNow"]}: {(new Date).toString()}</h3>
                 <CSSTransition
                     transitionName = 'article'
                     transitionEnterTimeout = {500}

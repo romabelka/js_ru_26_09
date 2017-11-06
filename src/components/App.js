@@ -7,29 +7,54 @@ import Filters from './Filters'
 import UserForm from './UserForm'
 import Counter from './Counter'
 import Menu, {MenuItem} from './Menu'
+import {dict} from '../dictionary'
 
 class App extends Component {
     static childContextTypes = {
-        user: PropTypes.string
+        user: PropTypes.string,
+        dict: PropTypes.object
     }
 
     getChildContext() {
         return {
-            user: this.state.username
+            user: this.state.username,
+            dict: dict[this.state.lang]
         }
     }
 
     state = {
-        username: ''
+        username: '',
+        lang: "eng"
     }
+
+    langArray = [
+        {
+            "key": "eng",
+            "name": "ENGLISH"
+        },
+        {
+            "key": "rus",
+            "name": "РУССКИЙ"
+        },
+        {
+            "key": "ita",
+            "name": "ITALIANO"
+        }
+    ]
 
     handleUserChange = username => this.setState({ username })
 
     render() {
-        console.log('---', 1)
+        const langButtons = this.langArray.map((lang) =>
+            <button key={lang.key} value={lang.key} onClick={this.changeLang} style={this.state.lang==lang.key ? {backgroundColor: 'green'} : {}}>
+                {lang.name}
+            </button>)
+
+
         return (
             <div>
                 <h1>App name</h1>
+                {langButtons}
                 <Menu>
                     <MenuItem to = '/counter' >counter</MenuItem>
                     <MenuItem to = '/filters' >filters</MenuItem>
@@ -54,6 +79,9 @@ class App extends Component {
     getNewArticle = () => <h1>New Article Page</h1>
     notFound = () => <h1>Not Found</h1>
     getError = () => <h1>Some Error</h1>
+    changeLang = (ev) => {
+        this.setState({ lang: ev.target.value })
+    }
 }
 
 App.propTypes = {
