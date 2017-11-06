@@ -5,30 +5,37 @@ import ArticlesPage from './routes/ArticlesPage'
 import CommentsPage from './routes/CommentsPage'
 import Filters from './Filters'
 import UserForm from './UserForm'
+import LanguageSwitcher from './LanguageSwitcher'
 import Counter from './Counter'
 import Menu, {MenuItem} from './Menu'
 
 class App extends Component {
     static childContextTypes = {
-        user: PropTypes.string
+        user: PropTypes.string,
+        language: PropTypes.string
     }
 
     getChildContext() {
         return {
-            user: this.state.username
+            user: this.state.username,
+            language: this.state.language
         }
     }
 
     state = {
-        username: ''
+        username: '',
+        language: 'en'
     }
 
     handleUserChange = username => this.setState({ username })
+
+    handleLanguageChange = language => this.setState({ language })
 
     render() {
         console.log('---', 1)
         return (
             <div>
+                <LanguageSwitcher handleLanguageChange={this.handleLanguageChange} />
                 <h1>App name</h1>
                 <Menu>
                     <MenuItem to = '/counter' >counter</MenuItem>
