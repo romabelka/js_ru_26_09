@@ -3,15 +3,15 @@ import Comment from './Comment'
 import PropTypes from 'prop-types'
 import toggleOpen from '../decorators/toggleOpen'
 import CommentForm from './CommentForm'
+import languageText from '../languageText'
 import Loader from './common/Loader'
 import {connect} from 'react-redux'
 import {loadArticleComments} from '../AC'
 
 class CommentList extends Component {
     static contextTypes = {
-        store: PropTypes.object,
-        router: PropTypes.object,
-        user: PropTypes.string
+        user: PropTypes.string,
+        language: PropTypes.string
     }
 
     static defaultProps = {
@@ -32,8 +32,11 @@ class CommentList extends Component {
 
     render() {
         console.log('---', 5)
+        const { language } = this.context
+        const showCommentsText = language ? languageText[language].SHOW_COMMENTS : null
+        const hideCommentsText = language ? languageText[language].HIDE_COMMENTS : null
         const {isOpen, toggleOpen} = this.props
-        const text = isOpen ? 'hide comments' : 'show comments'
+        const text = isOpen ? hideCommentsText : showCommentsText
         return (
             <div>
                 <h3>User: {this.context.user}</h3>

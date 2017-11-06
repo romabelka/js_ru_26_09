@@ -3,11 +3,15 @@ import PropTypes from 'prop-types'
 import CommentList from '../CommentList'
 import CSSTransition from 'react-addons-css-transition-group'
 import {connect} from 'react-redux'
+import languageText from '../../languageText'
 import {deleteArticle, loadArticleById} from '../../AC'
 import Loader from '../common/Loader'
 import './style.css'
 
 class Article extends Component {
+    static contextTypes = {
+        language: PropTypes.string
+    }
     static propTypes = {
         id: PropTypes.string,
         isOpen: PropTypes.bool,
@@ -35,8 +39,17 @@ class Article extends Component {
         if (isOpen) loadArticleById(id)
     }
 
+    /*componentWillReceiveProps(nextProps) {
+        const { isOpen, loadArticleById, id, loading } = nextProps
+        if (isOpen && loading === false && this.props.loading === true) loadArticleById(id)
+    }*/
+
     render() {
         const {article, isOpen, onButtonClick} = this.props
+        const { language } = this.context
+        const closeText = language ? languageText[language].CLOSE : null
+        const openText = language ? languageText[language].OPEN : null
+        const deleteText = language ? languageText[language].DELETE : null
         if (!article) return null
         if (this.state.clicked > 3) throw new Error('clicked more then 3 times')
         console.log('---', 4)
@@ -45,10 +58,10 @@ class Article extends Component {
                 <h2 ref = {this.setHeaderRef}>
                     {article.title}
                     <button onClick={onButtonClick}>
-                        {isOpen ? 'close' : 'open'}
+                        {isOpen ? closeText : openText}
                     </button>
                     <a href="#" onClick = {this.increment}>clicked {this.state.clicked} times</a>
-                    <button onClick = {this.handleDelete}>delete me</button>
+                    <button onClick = {this.handleDelete}>{deleteText}</button>
                 </h2>
                 <h3 onClick = {this.updateTime}>Time now: {(new Date).toString()}</h3>
                 <CSSTransition
@@ -106,5 +119,6 @@ class Article extends Component {
 
 
 export default connect((state, { id }) => ({
-    article: state.articles.getIn(['entities', id])
+    article: state.articles.getIn(['entities', id]),
+    loading: state.articles.loading
 }), { deleteArticle, loadArticleById }, null, { pure: false })(Article)
