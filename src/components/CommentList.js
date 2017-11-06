@@ -20,6 +20,10 @@ class CommentList extends Component {
         toggleOpen: PropTypes.func
     }
 
+    static contextTypes = {
+        dictionary: PropTypes.object
+    }
+
     constructor(props, context) {
         super(props, context)
     }
@@ -32,11 +36,12 @@ class CommentList extends Component {
 
     render() {
         console.log('---', 5)
+        const dict = this.context.dictionary
         const {isOpen, toggleOpen} = this.props
-        const text = isOpen ? 'hide comments' : 'show comments'
+        const text = isOpen ? dict.hide_comments : dict.show_comments
         return (
             <div>
-                <h3>User: {this.context.user}</h3>
+                <h3>{dict.context_user}: {this.context.user}</h3>
                 <button onClick={toggleOpen}>{text}</button>
                 {this.getBody()}
             </div>
@@ -49,11 +54,12 @@ class CommentList extends Component {
         if (commentsLoading) return <Loader />
         if (!commentsLoaded) return null
 
+        const dict = this.context.dictionary
         const body = comments.length ? (
             <ul>
                 {comments.map(id => <li key = {id}><Comment id = {id} /></li>)}
             </ul>
-        ) : <h3>No comments yet</h3>
+        ) : <h3>{dict.no_comments_yet}</h3>
 
         return (
             <div>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ArticleList from '../ArticleList'
+import PropTypes from 'prop-types'
 import Article from '../Article'
 import {Route} from 'react-router-dom'
 
@@ -7,6 +8,10 @@ class ArticlesPage extends Component {
     static propTypes = {
 
     };
+
+    static contextTypes = {
+        dictionary: PropTypes.object
+    }
 
     render() {
         console.log('---', 2)
@@ -19,7 +24,8 @@ class ArticlesPage extends Component {
     }
 
     getArticlePage = ({ match }) => {
-        if (!match) return <h2>Please select an article</h2>
+        const dict = this.context.dictionary
+        if (!match) return <h2>{dict.select_article}</h2>
         console.log('---', 3)
         return <Article id={match.params.id} isOpen key = {match.params.id} />
     }
