@@ -5,6 +5,7 @@ import CSSTransition from 'react-addons-css-transition-group'
 import {connect} from 'react-redux'
 import {deleteArticle, loadArticleById} from '../../AC'
 import Loader from '../common/Loader'
+import LocalizedText from '../LocalizedText'
 import './style.css'
 
 class Article extends Component {
@@ -39,7 +40,6 @@ class Article extends Component {
         const {article, isOpen, onButtonClick} = this.props
         if (!article) return null
         if (this.state.clicked > 3) throw new Error('clicked more then 3 times')
-        console.log('---', 4)
         return (
             <div>
                 <h2 ref = {this.setHeaderRef}>
@@ -48,7 +48,9 @@ class Article extends Component {
                         {isOpen ? 'close' : 'open'}
                     </button>
                     <a href="#" onClick = {this.increment}>clicked {this.state.clicked} times</a>
-                    <button onClick = {this.handleDelete}>delete me</button>
+                    <button onClick = {this.handleDelete}>
+                        <LocalizedText>delete me</LocalizedText>
+                    </button>
                 </h2>
                 <h3 onClick = {this.updateTime}>Time now: {(new Date).toString()}</h3>
                 <CSSTransition

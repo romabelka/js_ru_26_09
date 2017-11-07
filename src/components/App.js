@@ -7,6 +7,7 @@ import Filters from './Filters'
 import UserForm from './UserForm'
 import Counter from './Counter'
 import Menu, {MenuItem} from './Menu'
+import LangProvider from './LangProvider'
 
 class App extends Component {
     static childContextTypes = {
@@ -20,34 +21,41 @@ class App extends Component {
     }
 
     state = {
-        username: ''
+        username: '',
+        language: 'ru'
     }
+    changeLanguage = language => ev => this.setState({language})
 
-    handleUserChange = username => this.setState({ username })
+    handleUserChange = username => this.setState({username})
 
     render() {
-        console.log('---', 1)
         return (
-            <div>
-                <h1>App name</h1>
-                <Menu>
-                    <MenuItem to = '/counter' >counter</MenuItem>
-                    <MenuItem to = '/filters' >filters</MenuItem>
-                    <MenuItem to = '/articles' >articles</MenuItem>
-                    <MenuItem to = '/comments' >comments</MenuItem>
-                </Menu>
-                <UserForm value = {this.state.username} onChange = {this.handleUserChange}/>
-                <Switch>
-                    <Redirect from = '/' to = '/articles' exact />
-                    <Route path = '/counter' component = {Counter}/>
-                    <Route path = '/filters' component = {Filters}/>
-                    <Route path = '/articles/new' render = {this.getNewArticle}/>
-                    <Route path = '/articles' component = {ArticlesPage}/>
-                    <Route path = '/comments' component = {CommentsPage}/>
-                    <Route path = '/error' render = {this.getError}/>
-                    <Route path = '*' render = {this.notFound}/>
-                </Switch>
-            </div>
+            <LangProvider language={this.state.language}>
+                <div>
+                    <h1>App name</h1>
+                    <ul>
+                        <li onClick={this.changeLanguage('en')}>English</li>
+                        <li onClick={this.changeLanguage('ru')}>Russian</li>
+                    </ul>
+                    <Menu>
+                        <MenuItem to='/counter'>counter</MenuItem>
+                        <MenuItem to='/filters'>filters</MenuItem>
+                        <MenuItem to='/articles'>articles</MenuItem>
+                        <MenuItem to='/comments'>comments</MenuItem>
+                    </Menu>
+                    <UserForm value={this.state.username} onChange={this.handleUserChange}/>
+                    <Switch>
+                        <Redirect from='/' to='/articles' exact/>
+                        <Route path='/counter' component={Counter}/>
+                        <Route path='/filters' component={Filters}/>
+                        <Route path='/articles/new' render={this.getNewArticle}/>
+                        <Route path='/articles' component={ArticlesPage}/>
+                        <Route path='/comments' component={CommentsPage}/>
+                        <Route path='/error' render={this.getError}/>
+                        <Route path='*' render={this.notFound}/>
+                    </Switch>
+                </div>
+            </LangProvider>
         )
     }
 
@@ -56,8 +64,6 @@ class App extends Component {
     getError = () => <h1>Some Error</h1>
 }
 
-App.propTypes = {
-
-}
+App.propTypes = {}
 
 export default App

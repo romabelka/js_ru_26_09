@@ -1,9 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import LocalizedText from '../LocalizedText'
 
 function Loader(props) {
     return (
-        <h2>Loading...</h2>
+        <h3><LocalizedText>Loading</LocalizedText>...</h3>
     )
 }
 
